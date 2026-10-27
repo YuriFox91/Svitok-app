@@ -752,14 +752,14 @@
 <body data-theme="light">
 
 <!-- ОБУЧЕНИЕ (ОНБОРДИНГ ПРИ ПЕРВОМ ЗАПУСКЕ) -->
-<div id="onboarding-modal" class="active">
+<div id="onboarding-modal">
     <div class="onboarding-card">
         <div class="onboarding-step-indicator" id="onb-step">Шаг 1 из 4</div>
         <div class="onboarding-title" id="onb-title">Добро пожаловать в Свиток</div>
         <div class="onboarding-desc" id="onb-text">Это карманное пространство тишины, созданное для чтения Слова Божьего, размышления и молитвы вдали от цифрового шума.</div>
         <div class="onboarding-footer">
-            <button type="button" class="btn-ghost" onclick="closeOnboarding()">Пропустить</button>
-            <button type="button" class="btn-minimal" id="onb-next-btn" onclick="nextOnboardingStep()">Далее →</button>
+            <button type="button" class="btn-ghost" id="onb-skip-btn">Пропустить</button>
+            <button type="button" class="btn-minimal" id="onb-next-btn">Далее →</button>
         </div>
     </div>
 </div>
@@ -792,13 +792,13 @@
             <div class="logo">Свиток</div>
             <div class="header-date" id="current-date">—</div>
         </div>
-        <button type="button" class="theme-btn" id="theme-toggle-btn" onclick="toggleTheme()">Ночь</button>
+        <button type="button" class="theme-btn" id="theme-toggle-btn">Ночь</button>
     </header>
 
     <nav class="nav-tabs">
-        <button type="button" class="tab-btn active" id="nav-daily" onclick="switchTab('daily', this)">I. Слово</button>
-        <button type="button" class="tab-btn" id="nav-aid" onclick="switchTab('aid', this)">II. Аптечка</button>
-        <button type="button" class="tab-btn" id="nav-notebook" onclick="switchTab('notebook', this)">III. Летопись</button>
+        <button type="button" class="tab-btn active" id="nav-daily">I. Слово</button>
+        <button type="button" class="tab-btn" id="nav-aid">II. Аптечка</button>
+        <button type="button" class="tab-btn" id="nav-notebook">III. Летопись</button>
     </nav>
 
     <main>
@@ -807,15 +807,15 @@
             <div class="verse-block">
                 <div class="verse-top-row">
                     <div class="verse-ref-top" id="daily-verse-ref"></div>
-                    <button type="button" class="btn-share-icon" onclick="shareAsStoryCard()" title="Поделиться">
+                    <button type="button" class="btn-share-icon" id="share-story-btn" title="Поделиться">
                         <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
                     </button>
                 </div>
                 <div class="verse-text" id="daily-verse-text"></div>
 
                 <div class="verse-controls">
-                    <button type="button" class="btn-minimal" onclick="generateNewDaily()">Другой отрывок</button>
-                    <button type="button" class="btn-ghost" onclick="toggleContextBox()">Историческая справка</button>
+                    <button type="button" class="btn-minimal" id="new-verse-btn">Другой отрывок</button>
+                    <button type="button" class="btn-ghost" id="toggle-context-btn">Историческая справка</button>
                 </div>
 
                 <div class="context-box" id="daily-context-box">
@@ -838,24 +838,12 @@
             <div class="aid-intro">Выберите состояние души:</div>
 
             <div class="remedy-grid" id="remedy-buttons">
-                <button type="button" class="remedy-chip active" onclick="selectRemedy(0, this)">
-                    <span>01</span>Тревога и страх
-                </button>
-                <button type="button" class="remedy-chip" onclick="selectRemedy(1, this)">
-                    <span>02</span>Вина и падение
-                </button>
-                <button type="button" class="remedy-chip" onclick="selectRemedy(2, this)">
-                    <span>03</span>Обида и гнев
-                </button>
-                <button type="button" class="remedy-chip" onclick="selectRemedy(3, this)">
-                    <span>04</span>Выгорание
-                </button>
-                <button type="button" class="remedy-chip" onclick="selectRemedy(4, this)">
-                    <span>05</span>Одиночество
-                </button>
-                <button type="button" class="remedy-chip" onclick="selectRemedy(5, this)">
-                    <span>06</span>Скорбь и боль
-                </button>
+                <button type="button" class="remedy-chip active" data-index="0"><span>01</span>Тревога и страх</button>
+                <button type="button" class="remedy-chip" data-index="1"><span>02</span>Вина и падение</button>
+                <button type="button" class="remedy-chip" data-index="2"><span>03</span>Обида и гнев</button>
+                <button type="button" class="remedy-chip" data-index="3"><span>04</span>Выгорание</button>
+                <button type="button" class="remedy-chip" data-index="4"><span>05</span>Одиночество</button>
+                <button type="button" class="remedy-chip" data-index="5"><span>06</span>Скорбь и боль</button>
             </div>
 
             <div id="remedy-display">
@@ -870,13 +858,13 @@
         <!-- III. ЛЕТОПИСЬ -->
         <section id="notebook" class="section">
             <div class="sub-nav">
-                <button type="button" class="sub-nav-btn active" id="sub-tab-diary" onclick="switchJournalMode('diary')">Дневник</button>
-                <button type="button" class="sub-nav-btn" id="sub-tab-prayers" onclick="switchJournalMode('prayer')">Авен-Езер (Молитвы)</button>
+                <button type="button" class="sub-nav-btn active" id="sub-tab-diary">Дневник</button>
+                <button type="button" class="sub-nav-btn" id="sub-tab-prayers">Авен-Езер (Молитвы)</button>
             </div>
 
             <div class="journal-bar">
                 <h2 id="journal-heading" style="font-size: 1.75rem; font-weight: 700;">Личные записи</h2>
-                <button type="button" class="btn-minimal" id="open-editor-btn" onclick="toggleNoteEditor()">+ Новая запись</button>
+                <button type="button" class="btn-minimal" id="open-editor-btn">+ Новая запись</button>
             </div>
             
             <p id="journal-subtitle" style="color: var(--ink-muted); font-size: 1.15rem; margin-bottom: 24px; display: none;">
@@ -885,17 +873,17 @@
 
             <div id="note-editor" class="note-editor">
                 <div id="evening-template-wrap">
-                    <button type="button" class="template-helper-btn" onclick="insertEveningTemplate()">Шаблон: Вечерний самоанализ (3 вопроса)</button>
+                    <button type="button" class="template-helper-btn" id="template-btn">Шаблон: Вечерний самоанализ (3 вопроса)</button>
                 </div>
                 <input type="text" id="note-title" class="note-input" placeholder="Заголовок...">
                 <textarea id="note-text" class="note-textarea" placeholder="Текст записи..."></textarea>
                 <div class="editor-buttons">
-                    <button type="button" class="btn-minimal" onclick="saveNote()">Сохранить в свиток</button>
-                    <button type="button" class="btn-ghost" onclick="toggleNoteEditor()">Отмена</button>
+                    <button type="button" class="btn-minimal" id="save-note-btn">Сохранить в свиток</button>
+                    <button type="button" class="btn-ghost" id="cancel-note-btn">Отмена</button>
                 </div>
             </div>
 
-            <input type="text" id="search-input" class="search-input" placeholder="Поиск по записям..." oninput="filterNotes()">
+            <input type="text" id="search-input" class="search-input" placeholder="Поиск по записям...">
 
             <div id="notes-list"></div>
         </section>
@@ -1054,7 +1042,7 @@
         {
             step: "Шаг 2 из 4",
             title: "I. Слово",
-            text: "Здесь вас ждет ежедневный стих Писания, глубокая историческая справка о контексте написания текста, мысль дня от великих авторов прошлого, а также кнопка мгновенного создания карточки для сторис в соцсетях."
+            text: "Здесь находится ежедневный стих Писания, глубокая историческая справка о контексте, мысль дня от великих авторов, а также кнопка для создания красивой карточки на пергаменте для сторис в один клик."
         },
         {
             step: "Шаг 3 из 4",
@@ -1064,7 +1052,7 @@
         {
             step: "Шаг 4 из 4",
             title: "III. Летопись и Камни памяти",
-            text: "Ваш личный дневник. Включает в себя вкладку «Авен-Езер» (по 1 Царств 7:12), где вы можете записывать молитвенные нужды и отмечать золотой меткой дни, когда Господь ответил на ваши молитвы."
+            text: "Ваш личный дневник. Включает вкладку «Авен-Езер» (по 1 Царств 7:12): записывайте сюда молитвенные нужды и отмечайте золотой меткой дни, когда Господь ответил на молитву."
         }
     ];
     let currentOnbStep = 0;
@@ -1344,7 +1332,8 @@
     }
 
     function getFilteredNotesByMode() {
-        const query = document.getElementById('search-input').value.toLowerCase();
+        const searchInput = document.getElementById('search-input');
+        const query = searchInput ? searchInput.value.toLowerCase() : '';
         return memoryNotes.filter(n => {
             const noteType = n.type || 'diary';
             return noteType === currentJournalMode && (n.title.toLowerCase().includes(query) || n.text.toLowerCase().includes(query));
@@ -1353,11 +1342,14 @@
 
     function loadNotes() {
         const list = getFilteredNotesByMode();
+        const container = document.getElementById('notes-list');
+        if (!container) return;
+
         if (list.length === 0) {
             const emptyMsg = currentJournalMode === 'prayer' 
                 ? 'Список молитвенных нужд пуст.' 
                 : 'Записей пока нет.';
-            document.getElementById('notes-list').innerHTML = `<p style="color: var(--ink-muted); padding: 2rem 0; font-size: 1.2rem;">${emptyMsg}</p>`;
+            container.innerHTML = `<p style="color: var(--ink-muted); padding: 2rem 0; font-size: 1.2rem;">${emptyMsg}</p>`;
             return;
         }
         renderNotes(list);
@@ -1405,6 +1397,55 @@
         }).join('');
     }
 
-    (function init() {
+    // Жесткая привязка всех событий после загрузки страницы
+    window.addEventListener('DOMContentLoaded', function() {
         currentTheme = safeGetItem('app_theme', 'light');
-        apply
+        applyTheme(currentTheme);
+        try {
+            const savedNotes = localStorage.getItem('spiritual_notes');
+            if(savedNotes) memoryNotes = JSON.parse(savedNotes);
+        } catch(e) {}
+
+        setDateBadge();
+        loadDailyContent();
+        loadNotes();
+        checkOnboarding();
+
+        // Привязка кнопок онбординга
+        const nextBtn = document.getElementById('onb-next-btn');
+        const skipBtn = document.getElementById('onb-skip-btn');
+        if(nextBtn) nextBtn.onclick = nextOnboardingStep;
+        if(skipBtn) skipBtn.onclick = closeOnboarding;
+
+        // Привязка вкладок
+        document.getElementById('nav-daily').onclick = function() { switchTab('daily', this); };
+        document.getElementById('nav-aid').onclick = function() { switchTab('aid', this); };
+        document.getElementById('nav-notebook').onclick = function() { switchTab('notebook', this); };
+
+        // Привязка кнопок управления
+        document.getElementById('new-verse-btn').onclick = generateNewDaily;
+        document.getElementById('toggle-context-btn').onclick = toggleContextBox;
+        document.getElementById('share-story-btn').onclick = shareAsStoryCard;
+        document.getElementById('theme-toggle-btn').onclick = toggleTheme;
+
+        // Привязка чипов аптечки
+        document.querySelectorAll('.remedy-chip').forEach(function(chip) {
+            chip.onclick = function() {
+                selectRemedy(parseInt(this.getAttribute('data-index')), this);
+            };
+        });
+
+        // Привязка летописи
+        document.getElementById('sub-tab-diary').onclick = function() { switchJournalMode('diary'); };
+        document.getElementById('sub-tab-prayers').onclick = function() { switchJournalMode('prayer'); };
+        document.getElementById('open-editor-btn').onclick = toggleNoteEditor;
+        document.getElementById('template-btn').onclick = insertEveningTemplate;
+        document.getElementById('save-note-btn').onclick = saveNote;
+        document.getElementById('cancel-note-btn').onclick = toggleNoteEditor;
+        
+        const searchInput = document.getElementById('search-input');
+        if(searchInput) searchInput.oninput = filterNotes;
+    });
+</script>
+</body>
+</html>
