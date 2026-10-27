@@ -1032,7 +1032,6 @@
     let currentJournalMode = 'diary';
     let memoryNotes = [];
 
-    // ПОДРОБНОЕ ОБУЧЕНИЕ С ОПИСАНИЕМ КАЖДОГО РАЗДЕЛА
     const onboardingSteps = [
         {
             step: "Шаг 1 из 4",
@@ -1411,7 +1410,7 @@
         loadNotes();
         checkOnboarding();
 
-        // Привязка кнопок онбординга
+        // Привязка кнопок онбординга (с дублированием для надежности)
         const nextBtn = document.getElementById('onb-next-btn');
         const skipBtn = document.getElementById('onb-skip-btn');
         if(nextBtn) nextBtn.onclick = nextOnboardingStep;
