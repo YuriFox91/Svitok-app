@@ -4,30 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Свиток</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Cormorant Garamond';
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            src: local('Cormorant Garamond SemiBold'), local('CormorantGaramond-SemiBold'), 
+                 url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3bmXslicRC-Hzq9SrXVEwI6ZIhnc_X5z1a4A.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Cormorant Garamond';
+            font-style: italic;
+            font-weight: 600;
+            font-display: swap;
+            src: local('Cormorant Garamond SemiBold Italic'), local('CormorantGaramond-SemiBoldItalic'), 
+                 url(https://fonts.gstatic.com/s/cormorantgaramond/v16/co3_mXslicRC-Hzq9SrXVEwI6ZIhns11739c4Gtt.woff2) format('woff2');
+        }
+
         :root {
-            --bg-table: #160f0a; 
-            --parchment-bg: #efe0c4; 
-            --parchment-edge: #c7a97b;
-            --ink-color: #362212; 
-            --ink-light: #6e4e32;
-            --accent: #8c2626; 
-            --wood-dark: #3a200d;
-            --wood-light: #7a4d2c;
-            --paper-line-dark: rgba(65, 38, 15, 0.55);
-            --paper-line-light: rgba(255, 248, 231, 0.65);
+            --bg-void: #0e0c0a;
+            --paper: #f6f1e6;
+            --paper-subtle: #ede5d5;
+            --ink: #1a1612;
+            --ink-muted: #6e6254;
+            --cinnabar: #a8201a; 
+            --gold: #9e7329;
+            --border-hairline: rgba(26, 22, 18, 0.14);
+            --border-strong: rgba(26, 22, 18, 0.85);
+            --rod-bg: #1c1613;
+            --rod-trim: #8c6830;
         }
         
         [data-theme="dark"] {
-            --bg-table: #050302;
-            --parchment-bg: #261c10; 
-            --parchment-edge: #140d06;
-            --ink-color: #d8c4a8; 
-            --ink-light: #a38c73;
-            --accent: #b04141;
-            --paper-line-dark: rgba(0, 0, 0, 0.8);
-            --paper-line-light: rgba(255, 220, 170, 0.12);
+            --bg-void: #050505;
+            --paper: #141210;
+            --paper-subtle: #1d1a16;
+            --ink: #e8dfd1;
+            --ink-muted: #8a7f70;
+            --cinnabar: #d9463e;
+            --gold: #c99846;
+            --border-hairline: rgba(232, 223, 209, 0.12);
+            --border-strong: rgba(232, 223, 209, 0.7);
+            --rod-bg: #0c0a09;
+            --rod-trim: #6e5225;
         }
 
         * {
@@ -37,16 +57,17 @@
         }
 
         body {
-            font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
-            background-color: var(--bg-table);
-            color: var(--ink-color);
-            line-height: 1.6;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            background-color: var(--bg-void);
+            color: var(--ink);
+            line-height: 1.65;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            overflow-y: hidden; 
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
 
         /* ЗАСТАВКА */
@@ -59,7 +80,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.2s ease;
+            animation: splashAutoFade 0.8s cubic-bezier(0.22, 1, 0.36, 1) 2.5s forwards;
+            cursor: pointer;
         }
 
         .splash-light-beam {
@@ -67,11 +89,11 @@
             top: -100%;
             left: 50%;
             transform: translateX(-50%);
-            width: 2px;
-            height: 120vh;
+            width: 3px;
+            height: 130vh;
             background: linear-gradient(to bottom, transparent, #ffeaa7, #ffffff, transparent);
-            box-shadow: 0 0 30px 10px #ffeaa7, 0 0 80px 30px #f5cd79;
-            animation: beamDescend 2.5s ease-out forwards;
+            box-shadow: 0 0 40px 15px #ffeaa7, 0 0 100px 40px #f5cd79;
+            animation: beamDescend 2.2s ease-out forwards;
             z-index: 1;
         }
 
@@ -81,513 +103,807 @@
             font-weight: 700;
             color: transparent;
             text-align: center;
-            letter-spacing: 4px;
+            letter-spacing: 6px;
             text-transform: uppercase;
             background: linear-gradient(to bottom, #ffffff, #f5cd79);
             -webkit-background-clip: text;
             background-clip: text;
-            animation: titleReveal 2.5s ease-out 0.8s forwards;
+            animation: titleReveal 2.2s ease-out 0.3s forwards;
             z-index: 2;
         }
 
         @keyframes beamDescend {
             0% { top: -150%; opacity: 0; }
-            40% { opacity: 1; width: 4px; box-shadow: 0 0 50px 20px #ffeaa7, 0 0 100px 40px #f5cd79; }
+            40% { opacity: 1; width: 5px; box-shadow: 0 0 60px 25px #ffeaa7, 0 0 120px 50px #f5cd79; }
             100% { top: 100%; opacity: 0; width: 1px; }
         }
 
         @keyframes titleReveal {
             0% { color: transparent; text-shadow: 0 0 0px rgba(255,234,167,0); transform: scale(0.9); opacity: 0; }
             30% { opacity: 1; }
-            50% { color: #ffffff; text-shadow: 0 0 40px rgba(255,234,167,0.8); transform: scale(1.05); }
-            100% { color: #f5cd79; text-shadow: 0 0 15px rgba(255,234,167,0.4); transform: scale(1); opacity: 1; }
+            50% { color: #ffffff; text-shadow: 0 0 50px rgba(255,234,167,0.8); transform: scale(1.05); }
+            100% { color: #f5cd79; text-shadow: 0 0 20px rgba(255,234,167,0.4); transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes splashAutoFade {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
         }
 
         @media (max-width: 650px) {
             .splash-title { font-size: 3.5rem; }
         }
 
-        /* ИНТЕРФЕЙС СВИТКА */
-        .roller {
+        /* ОБУЧЕНИЕ (ОНБОРДИНГ) */
+        #onboarding-modal {
             position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 960px;
-            height: 58px;
-            z-index: 100;
-            display: flex;
+            inset: 0;
+            background-color: rgba(5, 4, 3, 0.92);
+            z-index: 9980;
+            display: none;
+            justify-content: center;
             align-items: center;
-            pointer-events: none;
+            padding: 20px;
+        }
+        #onboarding-modal.active {
+            display: flex;
         }
 
-        .roller.top { 
-            top: 0; 
-            background: linear-gradient(to bottom, var(--bg-table) 80%, transparent 100%);
-            padding-top: 4px;
-        }
-        .roller.bottom { 
-            bottom: 0; 
-            background: linear-gradient(to top, var(--bg-table) 80%, transparent 100%);
-            padding-bottom: 4px;
-        }
-
-        .roller-cap {
-            width: 32px;
-            height: 50px;
-            background: linear-gradient(to bottom, #1e0d04 0%, #5c351a 35%, #8a5229 50%, #3b200c 80%, #120702 100%);
-            border-radius: 6px;
-            box-shadow: inset 0 0 8px #000, 0 6px 14px rgba(0,0,0,0.9);
-            z-index: 103;
-            flex-shrink: 0;
-        }
-        .roller-cap.left { border-right: 4px solid #b5892e; }
-        .roller-cap.right { border-left: 4px solid #b5892e; }
-        
-        .roller-cylinder {
-            flex: 1;
-            height: 24px;
-            margin: 0 -4px; 
-            position: relative;
-            z-index: 101;
-            border-radius: 4px;
-            background-color: var(--parchment-bg);
-            background-image: 
-                linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 20%, rgba(255,255,255,0.35) 38%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.65) 85%, rgba(0,0,0,0.95) 100%),
-                linear-gradient(to right, var(--wood-dark) 0px, var(--wood-light) 18px, #3d2310 18px, #d4bc94 21px, #4a2c14 24px, #e6d2b5 27px, #3d2310 30px, transparent 30px, transparent calc(100% - 30px), #3d2310 calc(100% - 30px), #e6d2b5 calc(100% - 27px), #4a2c14 calc(100% - 24px), #d4bc94 calc(100% - 21px), #3d2310 calc(100% - 18px), var(--wood-light) calc(100% - 18px), var(--wood-dark) 100%),
-                repeating-linear-gradient(to bottom, var(--parchment-bg) 0px, var(--parchment-bg) 4px, var(--paper-line-light) 4px, var(--paper-line-dark) 6px, #2b1708 7px);
-            background-size: 100% 100%, 100% 100%, 100% 14px;
-            box-shadow: 0 14px 24px rgba(0,0,0,0.95), 0 4px 8px rgba(0,0,0,0.8);
-        }
-
-        .roller.bottom .roller-cylinder {
-            height: 46px;
-        }
-
-        .scroll-fold-shadow {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
+        .onboarding-card {
+            background-color: var(--paper);
+            color: var(--ink);
             width: 100%;
-            max-width: 900px;
-            height: 35px;
-            z-index: 90;
-            pointer-events: none;
-        }
-        .scroll-fold-shadow.top {
-            top: 42px;
-            background: linear-gradient(to bottom, rgba(20, 10, 2, 0.75) 0%, rgba(60, 35, 12, 0.25) 45%, transparent 100%);
-        }
-        .scroll-fold-shadow.bottom {
-            bottom: 42px;
-            background: linear-gradient(to top, rgba(20, 10, 2, 0.75) 0%, rgba(60, 35, 12, 0.25) 45%, transparent 100%);
+            max-width: 540px;
+            padding: 40px 36px;
+            border-left: 3px solid var(--cinnabar);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
         }
 
-        .scroll-wrapper {
-            width: 100%;
-            max-width: 900px;
-            margin: 0; 
-            padding: 80px 50px;
-            min-height: 100vh;
-            background-color: var(--parchment-bg);
-            background-image: 
-                radial-gradient(circle at 18% 22%, rgba(130, 85, 35, 0.14) 0%, transparent 45%),
-                radial-gradient(circle at 82% 55%, rgba(110, 65, 20, 0.16) 0%, transparent 50%),
-                radial-gradient(circle at 35% 85%, rgba(140, 90, 40, 0.12) 0%, transparent 40%),
-                repeating-linear-gradient(0deg, rgba(90, 55, 20, 0.03) 0px, rgba(90, 55, 20, 0.03) 1px, transparent 1px, transparent 3px);
-            box-shadow: 
-                inset 0 0 75px rgba(95, 50, 10, 0.55), 
-                inset 0 0 20px rgba(70, 35, 5, 0.45),
-                0 0 35px rgba(0,0,0,0.95);
-            border-left: 2px solid var(--parchment-edge);
-            border-right: 2px solid var(--parchment-edge);
-            position: relative;
-            z-index: 10;
+        .onboarding-step-indicator {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--cinnabar);
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
-        [data-theme="dark"] .scroll-wrapper {
-            box-shadow: 
-                inset 0 0 90px rgba(0,0,0,0.95), 
-                inset 0 0 30px rgba(0,0,0,0.85),
-                0 0 35px rgba(0,0,0,0.95);
+        .onboarding-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
 
-        header {
+        .onboarding-desc {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+
+        .onboarding-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--ink-light);
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
+            border-top: 1px solid var(--border-hairline);
+            padding-top: 20px;
+        }
+
+        /* ПЛАНКИ СВИТКА */
+        .scroll-rod {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 820px;
+            height: 18px;
+            background-color: var(--rod-bg);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .scroll-rod.top {
+            top: 0;
+            border-bottom: 2px solid var(--rod-trim);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.65);
+        }
+
+        .scroll-rod.bottom {
+            bottom: 0;
+            border-top: 2px solid var(--rod-trim);
+            box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.65);
+        }
+
+        .rod-end {
+            width: 24px;
+            height: 100%;
+            background: linear-gradient(90deg, #5c431c, #b58d47, #5c431c);
+        }
+
+        /* ПРОГРЕСС ЧТЕНИЯ */
+        .Unroll-progress {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 780px;
+            height: 3px;
+            background: transparent;
+            z-index: 101;
+        }
+        .unroll-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--cinnabar);
+            transition: width 0.1s ease-out;
+        }
+
+        /* ПОЛОТНО МАНУСКРИПТА */
+        .scroll-wrapper {
+            width: 100%;
+            max-width: 780px;
+            min-height: 100vh;
+            background-color: var(--paper);
+            padding: 64px 64px 80px 64px;
+            position: relative;
+            z-index: 10;
+            border-left: 1px solid var(--border-hairline);
+            border-right: 1px solid var(--border-hairline);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+        }
+
+        /* ШАПКА */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--ink);
+            margin-bottom: 12px;
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
         }
 
         .logo {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 0.18em;
+            line-height: 1;
         }
 
-        .icon-btn {
-            background: transparent;
-            border: 2px solid var(--ink-light);
-            color: var(--ink-color);
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
+        .header-date {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-muted);
+        }
+
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--border-hairline);
+            color: var(--ink);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 6px 12px;
             cursor: pointer;
-            font-size: 1.2rem;
+            transition: all 0.15s ease;
         }
+        .theme-btn:hover { border-color: var(--ink); }
 
-        /* УВЕЛИЧЕННЫЕ И РАЗДЕЛЕННЫЕ ВКЛАДКИ ОГЛАВЛЕНИЯ */
+        /* НАВИГАЦИЯ */
         .nav-tabs {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-            border-bottom: 1px dashed var(--ink-light);
-            padding-bottom: 1.2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border-hairline);
+            margin-bottom: 48px;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            font-family: 'Cormorant Garamond', 'Georgia', serif;
-            font-size: 1.35rem;
+            border-bottom: 3px solid transparent;
+            padding: 14px 8px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.78rem;
             font-weight: 600;
-            color: var(--ink-light);
-            cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 0.3rem 0.8rem;
-            transition: 0.2s;
+            letter-spacing: 0.12em;
+            color: var(--ink-muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
         }
 
-        .tab-btn:hover {
-            color: var(--accent);
-        }
-
-        .tab-btn.active {
-            color: var(--accent);
-            text-decoration: underline;
-            text-decoration-color: var(--accent);
-            text-decoration-thickness: 2px;
-            text-underline-offset: 8px;
-        }
-
-        .tab-separator {
-            color: var(--ink-light);
-            opacity: 0.4;
-            font-size: 1.1rem;
-            user-select: none;
-        }
+        .tab-btn:hover { color: var(--ink); }
+        .tab-btn.active { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
 
         .section { display: none; }
         .section.active { display: block; }
 
-        .date-badge {
-            font-style: italic;
-            font-size: 1.2rem;
-            color: var(--ink-light);
-            margin-bottom: 1rem;
-            text-align: center;
-            border-bottom: 1px dashed var(--ink-light);
-            display: inline-block;
-            padding-bottom: 0.3rem;
-            width: 100%;
+        /* СТИХ ДНЯ */
+        .verse-block {
+            margin-bottom: 48px;
+            padding-bottom: 36px;
+            border-bottom: 1px solid var(--border-hairline);
         }
 
-        .verse-card { text-align: center; margin-bottom: 3rem; }
+        .verse-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .verse-ref-top {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--cinnabar);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verse-ref-top::before {
+            content: '¶';
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            font-size: 1.2rem;
+        }
+
+        .btn-share-icon {
+            background: var(--paper-subtle);
+            border: 1px solid var(--border-strong);
+            color: var(--ink);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .btn-share-icon:hover {
+            background: var(--cinnabar);
+            color: #fff;
+            border-color: var(--cinnabar);
+            transform: scale(1.05);
+        }
+        .btn-share-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
 
         .verse-text {
-            font-size: 2.4rem;
+            font-size: 2.65rem;
+            font-weight: 600;
             font-style: italic;
-            line-height: 1.3;
-            margin-bottom: 1.5rem;
-            padding: 0 20px;
+            line-height: 1.22;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
         }
 
-        .verse-ref {
-            font-weight: 700;
-            font-size: 1.4rem;
+        .verse-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-minimal {
+            background: transparent;
+            border: 1px solid var(--border-strong);
+            color: var(--ink);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.74rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
+            letter-spacing: 0.1em;
+            padding: 10px 18px;
+            cursor: pointer;
+            transition: 0.15s ease;
+        }
+        .btn-minimal:hover { background: var(--ink); color: var(--paper); }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border-hairline);
+            color: var(--ink-muted);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.74rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: 0.15s ease;
+        }
+        .btn-ghost:hover { border-color: var(--cinnabar); color: var(--cinnabar); }
+
+        /* ИСТОРИЧЕСКАЯ СПРАВКА */
+        .context-box {
+            display: none;
+            margin-top: 20px;
+            padding: 22px 26px;
+            background-color: var(--paper-subtle);
+            border-left: 3px solid var(--cinnabar);
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--ink);
+        }
+        .context-box.active { display: block; }
+
+        .context-label {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--cinnabar);
+            margin-bottom: 10px;
+            display: block;
         }
 
-        .sermon-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-align: center;
+        .sermon-header { margin-bottom: 24px; }
+        .sermon-kicker {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--ink-muted);
+            margin-bottom: 4px;
         }
+        .sermon-title { font-size: 2rem; font-weight: 700; line-height: 1.15; }
 
         .sermon-content p {
-            margin-bottom: 1.5rem;
-            font-size: 1.35rem;
-            line-height: 1.7;
-            text-align: justify;
-            text-indent: 2rem;
+            margin-bottom: 1.4rem;
+            font-size: 1.45rem;
+            line-height: 1.68;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .sermon-content p:first-of-type::first-letter {
+            float: left;
+            font-size: 4.4rem;
+            line-height: 0.82;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-bottom: 4px;
+            color: var(--cinnabar);
+            font-weight: 700;
         }
 
         .author-sign {
-            margin-top: 2rem;
-            font-weight: 700;
-            font-size: 1.25rem;
-            text-align: right;
-            color: var(--accent);
-            font-style: italic;
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-hairline);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-muted);
         }
 
         .prayer-box {
-            background-color: rgba(140, 38, 38, 0.03);
-            border: 2px solid var(--accent);
-            padding: 2.5rem 2rem 2rem 2rem;
-            margin-top: 3.5rem;
+            margin-top: 40px;
+            padding: 28px 32px;
+            background-color: var(--paper-subtle);
+            border-top: 2px solid var(--cinnabar);
+            border-bottom: 1px solid var(--border-hairline);
             font-style: italic;
-            font-size: 1.35rem;
-            text-align: center;
+            font-size: 1.4rem;
+            line-height: 1.55;
             position: relative;
         }
-        
         .prayer-box::before {
-            content: '✝';
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--parchment-bg);
-            padding: 0 15px;
-            color: var(--accent);
-            font-size: 1.8rem;
+            content: 'МОЛИТВА';
+            display: block;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-style: normal;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            color: var(--cinnabar);
+            margin-bottom: 10px;
         }
 
-        /* Интерактивный блок «Минута тишины» */
-        .silence-box {
-            border: 1px solid var(--ink-light);
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-            background: rgba(110, 78, 50, 0.03);
+        /* АПТЕЧКА ДУШИ */
+        .aid-intro {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-muted);
+            margin-bottom: 16px;
         }
-        .timer-display {
-            font-size: 2.5rem;
+
+        .remedy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background-color: var(--border-hairline);
+            border: 1px solid var(--border-hairline);
+            margin-bottom: 40px;
+        }
+
+        .remedy-chip {
+            background-color: var(--paper);
+            border: none;
+            color: var(--ink);
+            padding: 16px 12px;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            font-size: 1.25rem;
             font-weight: 700;
-            margin: 1rem 0;
-            color: var(--accent);
+            cursor: pointer;
+            transition: 0.15s ease;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
+        .remedy-chip span {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.65rem;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+        }
+        .remedy-chip:hover { background-color: var(--paper-subtle); }
+        .remedy-chip.active { background-color: var(--ink); color: var(--paper); }
+        .remedy-chip.active span { color: var(--cinnabar); }
 
-        /* Дневник — ИСПРАВЛЕННЫЕ КНОПКИ В ПОЛЯХ */
-        .search-input, .note-input {
-            width: 100%;
-            padding: 0.5rem 0;
+        /* ЛЕТОПИСЬ */
+        .sub-nav { display: inline-flex; border: 1px solid var(--border-hairline); margin-bottom: 32px; }
+        .sub-nav-btn {
             background: transparent;
             border: none;
-            border-bottom: 2px solid var(--ink-light);
-            color: var(--ink-color);
-            font-family: 'Cormorant Garamond', 'Georgia', serif;
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-            outline: none;
+            color: var(--ink-muted);
+            padding: 10px 20px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .sub-nav-btn.active { background: var(--ink); color: var(--paper); }
+
+        .journal-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-hairline);
         }
 
-        .note-input { border-bottom-style: dashed; font-weight: 600; }
+        .search-input, .note-input {
+            width: 100%;
+            padding: 12px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-hairline);
+            color: var(--ink);
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            font-size: 1.4rem;
+            margin-bottom: 24px;
+            outline: none;
+            font-weight: 600;
+        }
 
         .note-textarea {
             width: 100%;
-            min-height: 200px;
+            min-height: 180px;
             background: transparent;
             border: none;
-            color: var(--ink-color);
+            color: var(--ink);
             font-family: 'Cormorant Garamond', 'Georgia', serif;
-            font-size: 1.3rem;
-            line-height: 32px;
+            font-size: 1.35rem;
+            line-height: 1.65;
             outline: none;
             resize: vertical;
-            background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(110, 78, 50, 0.2) 31px, rgba(110, 78, 50, 0.2) 32px);
+            font-weight: 500;
         }
 
         .note-editor {
             display: none;
-            margin-top: 2rem;
-            border: 1px solid var(--ink-light);
-            padding: 1.5rem;
+            margin-bottom: 36px;
+            background: var(--paper-subtle);
+            border-left: 3px solid var(--ink);
+            padding: 24px;
             width: 100%;
         }
         .note-editor.active { display: block; }
 
         .editor-buttons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-hairline);
         }
 
+        .template-helper-btn {
+            background: transparent;
+            border: 1px solid var(--border-hairline);
+            color: var(--ink-muted);
+            padding: 6px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        .template-helper-btn:hover { border-color: var(--cinnabar); color: var(--cinnabar); }
+
         .note-item {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--ink-light);
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-hairline);
             position: relative;
         }
 
-        .note-item h4 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--accent); padding-right: 4rem; }
-        .note-date { font-size: 1rem; font-style: italic; color: var(--ink-light); margin-bottom: 1rem; }
+        .note-item.answered-stone {
+            background: var(--paper-subtle);
+            padding: 24px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--gold);
+            border-bottom: none;
+        }
+
+        .ebenezer-badge {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 8px;
+        }
+
+        .note-item h4 { font-size: 1.6rem; margin-bottom: 4px; color: var(--ink); padding-right: 4.5rem; font-weight: 700; }
+        .note-date { font-family: 'Inter', -apple-system, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 16px; }
+
+        .stone-toggle-btn {
+            background: none;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        .stone-toggle-btn:hover { background: var(--gold); color: var(--paper); }
 
         .delete-note {
             position: absolute;
-            top: 0;
+            top: 24px;
             right: 0;
             background: transparent;
             border: none;
-            color: var(--accent);
+            color: var(--ink-muted);
             cursor: pointer;
-            font-size: 1.1rem;
-            font-family: 'Cormorant Garamond', serif;
-            text-decoration: underline;
-        }
-
-        button.action-btn {
-            background-color: transparent;
-            color: var(--ink-color);
-            border: 2px solid var(--ink-color);
-            padding: 0.6rem 1.5rem;
-            font-size: 1.2rem;
-            font-family: 'Cormorant Garamond', 'Georgia', serif;
-            cursor: pointer;
-            font-weight: 600;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.08em;
         }
-
-        button.action-btn:hover {
-            background-color: var(--ink-color);
-            color: var(--parchment-bg);
-        }
+        .note-item.answered-stone .delete-note { right: 24px; }
+        .delete-note:hover { color: var(--cinnabar); }
 
         footer {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid var(--ink-light);
-            font-style: italic;
-            font-size: 1.1rem;
-            opacity: 0.8;
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-hairline);
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--ink-muted);
         }
 
         @media (max-width: 650px) {
-            .scroll-wrapper { padding: 75px 20px; }
-            .verse-text { font-size: 1.8rem; padding: 0; }
-            .sermon-title { font-size: 2rem; }
-            .nav-tabs { gap: 0.6rem; }
-            .tab-btn { font-size: 0.95rem; padding: 0.2rem 0.4rem; }
-            .tab-separator { display: none; }
-            .prayer-box { padding: 2rem 1.5rem 1.5rem; }
-            .roller-cap { width: 22px; }
+            .scroll-wrapper { padding: 48px 22px 64px 22px; }
+            header { flex-direction: column; gap: 12px; align-items: flex-start; }
+            .brand-wrap { width: 100%; justify-content: space-between; }
+            .verse-text { font-size: 2rem; }
+            .sermon-title { font-size: 1.75rem; }
+            .sermon-content p { font-size: 1.32rem; }
+            .remedy-grid { grid-template-columns: repeat(2, 1fr); }
+            .tab-btn { font-size: 0.7rem; letter-spacing: 0.06em; padding: 12px 4px; }
             .editor-buttons { flex-direction: column; }
-            button.action-btn { width: 100%; text-align: center; }
+            .btn-minimal, .btn-ghost { width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body data-theme="light">
 
-<div id="splash-screen">
+<!-- ОБУЧЕНИЕ (ОНБОРДИНГ ПРИ ПЕРВОМ ЗАПУСКЕ) -->
+<div id="onboarding-modal" class="active">
+    <div class="onboarding-card">
+        <div class="onboarding-step-indicator" id="onb-step">Шаг 1 из 4</div>
+        <div class="onboarding-title" id="onb-title">Добро пожаловать в Свиток</div>
+        <div class="onboarding-desc" id="onb-text">Это карманное пространство тишины, созданное для чтения Слова Божьего, размышления и молитвы вдали от цифрового шума.</div>
+        <div class="onboarding-footer">
+            <button type="button" class="btn-ghost" onclick="closeOnboarding()">Пропустить</button>
+            <button type="button" class="btn-minimal" id="onb-next-btn" onclick="nextOnboardingStep()">Далее →</button>
+        </div>
+    </div>
+</div>
+
+<!-- ЗАСТАВКА -->
+<div id="splash-screen" onclick="this.style.display='none'">
     <div class="splash-light-beam"></div>
     <div class="splash-title">Свиток</div>
 </div>
 
-<div class="roller top">
-    <div class="roller-cap left"></div>
-    <div class="roller-cylinder" id="cylinder-top"></div>
-    <div class="roller-cap right"></div>
+<!-- ВЕРХНЯЯ ПЛАНКА СВИТКА -->
+<div class="scroll-rod top">
+    <div class="rod-end"></div>
+    <div class="rod-end"></div>
 </div>
-<div class="scroll-fold-shadow top"></div>
-
-<div class="scroll-fold-shadow bottom"></div>
-<div class="roller bottom">
-    <div class="roller-cap left"></div>
-    <div class="roller-cylinder" id="cylinder-bottom"></div>
-    <div class="roller-cap right"></div>
+<div class="Unroll-progress">
+    <div class="unroll-bar" id="unroll-bar"></div>
 </div>
 
+<!-- НИЖНЯЯ ПЛАНКА СВИТКА -->
+<div class="scroll-rod bottom">
+    <div class="rod-end"></div>
+    <div class="rod-end"></div>
+</div>
+
+<!-- ОСНОВНОЙ МАНУСКРИПТ -->
 <div class="scroll-wrapper">
     <header>
-        <div class="logo">Свиток</div>
-        <button class="icon-btn" id="theme-toggle-btn" title="Ночной свиток">🌙</button>
+        <div class="brand-wrap">
+            <div class="logo">Свиток</div>
+            <div class="header-date" id="current-date">—</div>
+        </div>
+        <button type="button" class="theme-btn" id="theme-toggle-btn" onclick="toggleTheme()">Ночь</button>
     </header>
 
-    <!-- Раздельное структурированное оглавление -->
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('daily', this)">Стих дня</button>
-        <span class="tab-separator">•</span>
-        <button class="tab-btn" onclick="switchTab('seeker', this)">О тишине и смысле</button>
-        <span class="tab-separator">•</span>
-        <button class="tab-btn" onclick="switchTab('notebook', this)">Летопись души</button>
-    </div>
+    <nav class="nav-tabs">
+        <button type="button" class="tab-btn active" id="nav-daily" onclick="switchTab('daily', this)">I. Слово</button>
+        <button type="button" class="tab-btn" id="nav-aid" onclick="switchTab('aid', this)">II. Аптечка</button>
+        <button type="button" class="tab-btn" id="nav-notebook" onclick="switchTab('notebook', this)">III. Летопись</button>
+    </nav>
 
     <main>
-        <!-- Вкладка: Стих дня -->
+        <!-- I. СЛОВО ДНЯ -->
         <section id="daily" class="section active">
-            <div class="verse-card">
-                <div class="date-badge" id="current-date">Загрузка...</div>
-                <div class="verse-text" id="daily-verse-text">Разворачиваем свиток...</div>
-                <div class="verse-ref" id="daily-verse-ref"></div>
-                <div style="margin-top: 2.5rem;">
-                    <button class="action-btn" onclick="generateNewDaily()">Развернуть новый стих</button>
+            <div class="verse-block">
+                <div class="verse-top-row">
+                    <div class="verse-ref-top" id="daily-verse-ref"></div>
+                    <button type="button" class="btn-share-icon" onclick="shareAsStoryCard()" title="Поделиться">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+                    </button>
+                </div>
+                <div class="verse-text" id="daily-verse-text"></div>
+
+                <div class="verse-controls">
+                    <button type="button" class="btn-minimal" onclick="generateNewDaily()">Другой отрывок</button>
+                    <button type="button" class="btn-ghost" onclick="toggleContextBox()">Историческая справка</button>
+                </div>
+
+                <div class="context-box" id="daily-context-box">
+                    <span class="context-label">Историческая справка</span>
+                    <div id="daily-context-text"></div>
                 </div>
             </div>
 
-            <div>
-                <h1 class="sermon-title" id="sermon-title">Слово на сегодня</h1>
+            <article>
+                <div class="sermon-header">
+                    <div class="sermon-kicker">Мысль дня</div>
+                    <h1 class="sermon-title" id="sermon-title">Слово на сегодня</h1>
+                </div>
                 <div class="sermon-content" id="sermon-body"></div>
+            </article>
+        </section>
+
+        <!-- II. ДУХОВНАЯ АПТЕЧКА -->
+        <section id="aid" class="section">
+            <div class="aid-intro">Выберите состояние души:</div>
+
+            <div class="remedy-grid" id="remedy-buttons">
+                <button type="button" class="remedy-chip active" onclick="selectRemedy(0, this)">
+                    <span>01</span>Тревога и страх
+                </button>
+                <button type="button" class="remedy-chip" onclick="selectRemedy(1, this)">
+                    <span>02</span>Вина и падение
+                </button>
+                <button type="button" class="remedy-chip" onclick="selectRemedy(2, this)">
+                    <span>03</span>Обида и гнев
+                </button>
+                <button type="button" class="remedy-chip" onclick="selectRemedy(3, this)">
+                    <span>04</span>Выгорание
+                </button>
+                <button type="button" class="remedy-chip" onclick="selectRemedy(4, this)">
+                    <span>05</span>Одиночество
+                </button>
+                <button type="button" class="remedy-chip" onclick="selectRemedy(5, this)">
+                    <span>06</span>Скорбь и боль
+                </button>
+            </div>
+
+            <div id="remedy-display">
+                <div class="verse-block">
+                    <div class="verse-ref-top" id="remedy-ref"></div>
+                    <div class="verse-text" id="remedy-verse" style="margin-bottom: 0;"></div>
+                </div>
+                <div class="sermon-content" id="remedy-body"></div>
             </div>
         </section>
 
-        <!-- Вкладка: О тишине и смысле (с практичным таймером паузы) -->
-        <section id="seeker" class="section">
-            <h1 class="sermon-title" style="margin-bottom: 2rem;">Тишина посреди шума</h1>
-            <div class="sermon-content">
-                <p>Современный человек живет в эпицентре бесконечного шума. Мы окружены экранами, дедлайнами, чужими мнениями и постоянной тревожностью за завтрашний день. Нам кажется, что если мы остановимся хотя бы на миг, то проиграем. Но душа под этой броней суеты кричит об одном — об усталости и жажде подлинности.</p>
-                <p>Иисус из Назарета никогда не был похож на религиозного догматика. Он приходил к тем, кто сомневался, к уставшим бунтарям, к изгоям и интеллектуальным скептикам. Он не требовал слепого согласия; Он предлагал живой диалог. Его фраза <em>«Придите ко Мне... и успокоите души ваши»</em> обращена не к тем, кто во всем уверен, а к тем, кто надломлен бременем этого мира.</p>
-                <p>Если ты смотришь на веру со скепсисом — это нормально. Христос не боялся вопросов Фомы и не осуждал чужие сомнения. Попробуй сегодня просто выключить внутренний спор и побыть в тишине. Возможно, за этой тишиной стоит Тот, Кто ждет возможности коснуться твоего сердца без слов.</p>
-            </div>
-
-            <!-- Практичный инструмент: Минута тишины -->
-            <div class="silence-box">
-                <p style="font-size: 1.2rem; font-style: italic;">Инструмент для разгрузки разума:</p>
-                <div class="timer-display" id="timer-text">01:00</div>
-                <button class="action-btn" id="timer-btn" onclick="toggleSilenceTimer()">Начать минуту тишины</button>
-            </div>
-
-            <div class="prayer-box" style="margin-top: 3rem;">
-                «Если ты ищешь смысл там, где рушатся привычные опоры, помни: свет светит во тьме, и тьма не объяла его».
-            </div>
-        </section>
-
-        <!-- Вкладка: Дневник -->
+        <!-- III. ЛЕТОПИСЬ -->
         <section id="notebook" class="section">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; text-transform: uppercase;">Мой дневник</h2>
-                <button class="action-btn" onclick="toggleNoteEditor()">Взять перо</button>
+            <div class="sub-nav">
+                <button type="button" class="sub-nav-btn active" id="sub-tab-diary" onclick="switchJournalMode('diary')">Дневник</button>
+                <button type="button" class="sub-nav-btn" id="sub-tab-prayers" onclick="switchJournalMode('prayer')">Авен-Езер (Молитвы)</button>
+            </div>
+
+            <div class="journal-bar">
+                <h2 id="journal-heading" style="font-size: 1.75rem; font-weight: 700;">Личные записи</h2>
+                <button type="button" class="btn-minimal" id="open-editor-btn" onclick="toggleNoteEditor()">+ Новая запись</button>
             </div>
             
-            <input type="text" id="search-input" class="search-input" placeholder="Поиск по свиткам..." oninput="filterNotes()">
-            
+            <p id="journal-subtitle" style="color: var(--ink-muted); font-size: 1.15rem; margin-bottom: 24px; display: none;">
+                «Авен-Езер» означает «До сего места помог нам Господь» (1 Царств 7:12). Записывайте сюда молитвенные нужды и отмечайте день, когда пришёл ответ.
+            </p>
+
             <div id="note-editor" class="note-editor">
-                <input type="text" id="note-title" class="note-input" placeholder="Заголовок (например: Мысли о смысле...)">
-                <textarea id="note-text" class="note-textarea" placeholder="Начните писать здесь..."></textarea>
+                <div id="evening-template-wrap">
+                    <button type="button" class="template-helper-btn" onclick="insertEveningTemplate()">Шаблон: Вечерний самоанализ (3 вопроса)</button>
+                </div>
+                <input type="text" id="note-title" class="note-input" placeholder="Заголовок...">
+                <textarea id="note-text" class="note-textarea" placeholder="Текст записи..."></textarea>
                 <div class="editor-buttons">
-                    <button class="action-btn" onclick="saveNote()">Запечатлеть</button>
-                    <button class="action-btn" style="border-color: var(--ink-light); color: var(--ink-light);" onclick="toggleNoteEditor()">Отложить</button>
+                    <button type="button" class="btn-minimal" onclick="saveNote()">Сохранить в свиток</button>
+                    <button type="button" class="btn-ghost" onclick="toggleNoteEditor()">Отмена</button>
                 </div>
             </div>
 
-            <div id="notes-list" style="margin-top: 3rem;"></div>
+            <input type="text" id="search-input" class="search-input" placeholder="Поиск по записям..." oninput="filterNotes()">
+
+            <div id="notes-list"></div>
         </section>
     </main>
 
     <footer>
-        Приложение «Свиток»
+        <span>Свиток</span>
+        <span>Soli Deo Gloria</span>
     </footer>
 </div>
 
@@ -595,66 +911,189 @@
     const DAILY_DATABASE = [
         {
             ref: "К Филиппийцам 4:13",
-            verse: "Все могу в укрепляющем меня Христе Иисусе.",
-            title: "Слово на сегодня",
+            verse: "Все могу в укрепляющем меня Иисусе Христе.",
+            context: "Письмо апостола Павла общине в Филиппах — первом городе в Македонии, где было основано европейское собрание. Павел пишет послание из римских уз (около 60–62 гг. н.э.), прикованный цепью к воину императорской гвардии. Он не жалуется на холод и сырость подземелья, а благодарит филиппийцев за присланную помощь. Фраза «все могу» в оригинале означает способность переносить любые крайности (и изобилие, и голод) не за счет собственной силы воли, а благодаря непрерывному притоку внутренней жизни от воскресшего Христа.",
+            title: "Вседостаточность Христа",
+            author: "Чарльз Сперджен • «Утром и вечером»",
             content: `
                 <p>Тайная жизнь верующего держится на невидимом союзе со Спасителем. Когда апостол Павел говорит: «Все могу в укрепляющем меня Христе», он не хвалится своей выносливостью или духовной закалкой. Он указывает на внешний, неиссякаемый источник. Христианин подобен тростнику на ветру: сам по себе он слаб и падает от малейшего шторма, но будучи соединен с живым Корнем, он устоит перед лицом любых испытаний.</p>
                 <p>В самих себе мы не имеем ресурса для победы над грехом, страхом или унынием. Но во Христе нам дарована полнота. Как нищий, получивший неограниченный доступ к царской сокровищнице, верующий черпает силу не из собственных заслуг, а из совершенной жертвы и благодати Господа Иисуса.</p>
-                <div class="author-sign">Чарльз Сперджен, из сборника «Утром и вечером»</div>
+                <div class="author-sign">Чарльз Сперджен • «Утром и вечером»</div>
                 <div class="prayer-box">Господь Иисус, я исповедую свою слабость и немощь. Научи меня черпать победу и крепость не из собственных усилий, а из Твоего непререкаемого источника. Аминь.</div>
             `
         },
         {
             ref: "Притчи Соломона 3:5",
             verse: "Надейся на Господа всем сердцем твоим, и не полагайся на разум твой.",
-            title: "Слово на сегодня",
+            context: "Книга Притчей оформлена как обращение мудрого царского наставника к молодому ученику, вступающему в самостоятельную жизнь в мире, полном искушений и лживых идеологий. Древнееврейский глагол «батах», переведенный как «надеяться», имеет физический корень: он означает упасть грудью на землю или броситься всем весом на надежную опору. Соломон призывает прекратить опираться на хрупкий стержень человеческой логики и всецело довериться суверенному Творцу.",
+            title: "Пределы человеческого расчета",
+            author: "Томас Уотсон • «Божественное утешение»",
             content: `
                 <p>Вера начинается там, где заканчивается человеческий расчет. Наш разум — это прекрасный дар Творца для управления земными делами, но он совершенно слеп, когда дело касается путей провидения и нашего духовного будущего. Разум шепчет нам о тупиках и рисках, в то время как истинная вера смотрит на пронзенные руки Христа и знает, что для Него нет безвыходных ситуаций.</p>
                 <p>Полагаться на Господа всем сердцем означает перестать спорить с Его волей и вырывать карту из Его отцовских рук. Доверие означает принимать Божье сердце даже тогда, когда мы абсолютно не понимаем Его руку. Тот, кто отдал за нас Свою жизнь на Голгофе, не способен ошибиться в деталях нашей повседневной дороги.</p>
-                <div class="author-sign">Томас Уотсон, из книги «Божественное утешение»</div>
+                <div class="author-sign">Томас Уотсон • «Божественное утешение»</div>
                 <div class="prayer-box">Господь Иисус, прости мне мои постоянные сомнения и попытки просчитать всё собственным умом. Я предаю свое завтра в Твое любящее сердце. Аминь.</div>
             `
         },
         {
             ref: "Псалтирь 22:1",
             verse: "Господь — Пастырь мой; я ни в чем не буду нуждаться.",
-            title: "Слово на сегодня",
+            context: "Царь Давид написал этот псалом на закате жизни, оглядываясь назад на свой долгий путь — от пастушеских полей Вифлеема до царского престола, омраченного войнами, изгнаниями и предательствами. Используя метафору пастуха и овцы, Давид знал суровую реальность Ближнего Востока: овца — абсолютно беспомощное животное, не имеющее ни защиты, ни ориентации в пространстве. Вся ее безопасность зависит исключительно от того, чей посох идет впереди.",
+            title: "Забота Доброго Пастыря",
+            author: "Джордж Мюллер • «Жизнь веры»",
             content: `
                 <p>Овца не заботится о том, где она будет искать воду завтра или как защититься от хищников — это полная ответственность пастыря. Наша главная беда заключается в том, что мы пытаемся одновременно играть роль беспомощной овцы и роль всезнающего пастыря своей жизни, от чего и сходим с ума от тревог.</p>
                 <p>Иисус Христос — Добрый Пастырь, отдал жизнь за Свое стадо. Если Он заплатил за нас такую искупительную цену, неужели Он оставит нас без хлеба, утешения или водительства сегодня? Его пажить изобильна, а защита абсолютна. Снимите с себя бремя пастуха своей жизни и доверьтесь Его посоху.</p>
-                <div class="author-sign">Джордж Мюллер, из духовных дневников «Жизнь веры»</div>
+                <div class="author-sign">Джордж Мюллер • «Жизнь веры»</div>
                 <div class="prayer-box">Господь Иисус, Ты — мой Пастырь. Избавь меня от страха нужды и научи смирно идти за Твоим голосом, находя покой в Твоей заботе. Аминь.</div>
             `
         },
         {
             ref: "Иеремия 29:11",
-            verse: "Ибо только Я знаю намерения, какие имею о вас, говорит Господь, намерения во благо, а не на зло...",
-            title: "Слово на сегодня",
+            verse: "Ибо только Я знаю намерения, какие имею о вас, говорит Господь, намерения во благо, а не на зло.",
+            context: "Пророк Иеремия направляет это послание еврейским изгнанникам, угнанным в Вавилон царем Навуходоносором. Их дома сожжены, Иерусалимский храм разрушен, а сами они живут в статусе рабов на чужбине. Ложные пророки сулят им скорое возвращение через пару месяцев, но Иеремия от лица Бога говорит горькую правду: вам придется строить дома и жить в чужой земле 70 лет. И именно посреди этого долгого вавилонского плена звучит величайшее обетование надежды.",
+            title: "Огранка в темные времена",
+            author: "А. В. Тозер • «Корни праведности»",
             content: `
                 <p>Нас формирует не то, что происходит с нами в часы радости, а то, к чему мы обращаемся в минуты глубочайшего кризиса. Когда привычные опоры рушатся, человеческому сердцу свойственно думать, что Бог оставил его или держит на него гнев. Но Евангелие открывает нам совершенно иную истину: наш Небесный Отец смотрит на нас исключительно через призму совершенного искупления Своего Сына.</p>
                 <p>Намерения Иисуса Христа о нас не меняются от штормов. Все трудности, через которые Он нас проводит, служат одной благородной цели — сделать нас причастниками Его святости. То, что кажется нам крушением планов, в Его мастерской является процессом огранки драгоценного камня.</p>
-                <div class="author-sign">А. В. Тозер, из книги «Корни праведности»</div>
+                <div class="author-sign">А. В. Тозер • «Корни праведности»</div>
                 <div class="prayer-box">Господь Иисус, я верю, что Твои планы о моей жизни наполнены благостью. Помоги мне доверять Твоему премудрому переплавляющему огню. Аминь.</div>
             `
         },
         {
             ref: "От Матфея 11:28",
             verse: "Придите ко Мне, все труждающиеся и обремененные, и Я успокою вас.",
-            title: "Слово на сегодня",
+            context: "Иисус произносит этот призыв в Галилее, наблюдая за изнуренным народом, задавленным тяжелым бременем римских податей и непосильных религиозных постановлений фарисеев, требовавших безупречного исполнения сотен устных правил. Религиозные вожди того времени «связывали бремена тяжелые и неудобоносимые» и возлагали на плечи людей. В противовес этому Христос открывает объятия уставшим грешникам, предлагая не свод законов, а живой покой в Своем лице.",
+            title: "Прибежище для изнуренных",
+            author: "Ричард Бакстер • «Вечный покой святых»",
             content: `
                 <p>Верующему полезно чаще размышлять о том, что Христос не просто ожидает нас на небесах — Он уже сейчас предлагает Свой глубокий покой нашим изнуренным душам. Мы часто носим на себе тяжелый груз вины, обид, самоедства и стремления всем угодить, хотя Спаситель давно прибил этот греховный багаж к Голгофскому древу.</p>
                 <p>Иисус не порицает нас за нашу усталость. Он с нежностью произносит: «Придите». Это личное приглашение к Тому, Кто знает о нас всё и никогда не оттолкнет кающегося грешника. Прийти к Нему — значит перестать оправдываться перед миром и принести Ему свое разбитое сердце.</p>
-                <div class="author-sign">Ричард Бакстер, из книги «Вечный покой святых»</div>
+                <div class="author-sign">Ричард Бакстер • «Вечный покой святых»</div>
                 <div class="prayer-box">Господь Иисус, я прихожу к Тебе со всей своей усталостью и грузом ошибок. Спасибо, что принимаешь меня и даруешь истинный покой. Аминь.</div>
             `
         }
     ];
 
+    const REMEDIES_DATABASE = [
+        {
+            ref: "Псалтирь 55:4",
+            verse: "Когда я в страхе, на Тебя я уповаю.",
+            content: `
+                <p>Страх возникает тогда, когда мы смотрим на высоту волн вместо того, чтобы смотреть на Повелителя бури. Тревога о завтрашнем дне не забирает у завтрашнего дня его скорбей, но забирает у сегодняшнего дня его силу и мир.</p>
+                <p>Вспомните: ни один волос не падает с головы вашей без воли Отца Небесного. Если Иисус Христос прошел ради вас сквозь тьму Голгофы, неужели Он оставит ваш челн посреди житейского шторма?</p>
+                <div class="author-sign">Чарльз Сперджен • «Сокровищница Давида»</div>
+                <div class="prayer-box">Господь Иисус, утихомирь бурю в моем сердце. Я перевожу взгляд со своих страхов на Твое всемогущество и верность. Аминь.</div>
+            `
+        },
+        {
+            ref: "1-е Иоанна 1:9",
+            verse: "Если исповедуем грехи наши, то Он, будучи верен и праведен, простит нам грехи наши и очистит нас от всякой неправды.",
+            content: `
+                <p>Когда верующий оступается и падает, враг душ человеческих тут же шепчет ему: «Ты лицемер, ты больше не смеешь идти ко Христу». Но Евангелие говорит прямо противоположное: именно потому, что ты ранен грехом, ты должен немедленно бежать к Врачу.</p>
+                <p>В Боге больше милосердия, чем в нас — греха. Наша немощь подобна капле грязи, но кровь Иисуса Христа подобна безбрежному океану, способному омыть любую душу, приходящую с искренним сокрушением.</p>
+                <div class="author-sign">Томас Уотсон • «Учение о покаянии»</div>
+                <div class="prayer-box">Господь Иисус, я не прячу свой грех и прихожу к Твоему кресту. Омой мою совесть Своей пречистой кровью и подними меня снова. Аминь.</div>
+            `
+        },
+        {
+            ref: "К Ефесянам 4:32",
+            verse: "Но будьте друг ко другу добры, сострадательны, прощайте друг друга, как и Бог во Христе простил вас.",
+            content: `
+                <p>Держать в сердце непрощение — всё равно что носить раскаленный уголь за пазухой, надеясь обжечь обидчика. Обида разъедает прежде всего сосуд, в котором она хранится, и лишает душу способности слышать тихий голос Святого Духа.</p>
+                <p>Встаньте у подножия Голгофы и посмотрите на пронзенного Спасителя: Он простил вам долг в десять тысяч талантов. Только созерцание этой незаслуженной милости дает нам внутреннюю силу отпустить долги нашим ближним.</p>
+                <div class="author-sign">Джон Баньян • Духовные наставления</div>
+                <div class="prayer-box">Господь Иисус, у меня нет своих сил забыть боль, но ради Твоего прощения я отпускаю обиду в Твои праведные руки. Исцели мою душу. Аминь.</div>
+            `
+        },
+        {
+            ref: "Исаия 42:3",
+            verse: "Трости надломленной не переломит, и льна курящегося не угасит.",
+            content: `
+                <p>Бывают дни, когда вера в сердце едва теплится, как догорающий фитиль светильника, и у человека нет сил даже сложить слова в молитву. Но знайте: Господь Иисус никогда не задует слабую искру. Напротив, Он бережно оградит ее Своими ладонями и вольет свежее елейное масло благодати.</p>
+                <p>Даже ваш безмолвный вздох к Богу посреди усталости уже услышан на небесах. Отдохните в том, что ваше спасение держится не силой вашей хватки за Христа, а силой Его хватки за вас.</p>
+                <div class="author-sign">Ричард Бакстер • «Наставления для утомленных душ»</div>
+                <div class="prayer-box">Господь Иисус, Ты видишь, как иссякли силы мои. Понеси меня на Своих руках сегодня и согрей мое уставшее сердце. Аминь.</div>
+            `
+        },
+        {
+            ref: "К Евреям 13:5",
+            verse: "Ибо Сам сказал: «не оставлю тебя и не покину тебя».",
+            content: `
+                <p>Человек может чувствовать себя совершенно одиноким даже посреди шумной толпы, когда никто из близких не способен разделить тайную тяжесть его души. Но у верующего есть Друг, Который привязан к нему теснее брата.</p>
+                <p>Христос прошел через абсолютное богооставление на кресте именно для того, чтобы вы никогда не остались одни в своей темной долине. Ваша комната может быть пустой для человеческого глаза, но она наполнена присутствием Царя царей.</p>
+                <div class="author-sign">А. В. Тозер • «Погоня за Богом»</div>
+                <div class="prayer-box">Господь Иисус, дай мне ощутить Твое живое присутствие рядом. Ты — мой верный Друг, Который понимает меня без слов. Аминь.</div>
+            `
+        },
+        {
+            ref: "2-е Коринфянам 12:9",
+            verse: "Но Господь сказал мне: «довольно для тебя благодати Моей, ибо сила Моя совершается в немощи».",
+            content: `
+                <p>Когда тело или душа проходят через горнило страданий, помните: Небесный Ювелир никогда не отводит взгляда от расплавленного золота. Он не допустит, чтобы огонь был хотя бы на один градус горячее, чем это необходимо для очищения вашей веры.</p>
+                <p>Если Бог медлит забрать шип, значит Он умножает благодать, чтобы вы могли нести его. В каждой слезе святого сокрыто семя будущего вечного утешения.</p>
+                <div class="author-sign">Джордж Мюллер • Из писем утешения</div>
+                <div class="prayer-box">Господь Иисус, даруй мне терпение и мужество в час испытания. Пусть Твоя благодать станет моей опорой и утешением в немощи. Аминь.</div>
+            `
+        }
+    ];
+
     let currentTheme = 'light';
+    let currentDailyIndex = 0;
+    let currentJournalMode = 'diary';
     let memoryNotes = [];
-    let timerInterval = null;
-    let timeLeft = 60;
-    let isTimerRunning = false;
+
+    // ПОДРОБНОЕ ОБУЧЕНИЕ С ОПИСАНИЕМ КАЖДОГО РАЗДЕЛА
+    const onboardingSteps = [
+        {
+            step: "Шаг 1 из 4",
+            title: "Добро пожаловать в Свиток",
+            text: "Это карманное пространство тишины, созданное для чтения Слова Божьего, размышления и молитвы вдали от цифрового шума."
+        },
+        {
+            step: "Шаг 2 из 4",
+            title: "I. Слово",
+            text: "Здесь вас ждет ежедневный стих Писания, глубокая историческая справка о контексте написания текста, мысль дня от великих авторов прошлого, а также кнопка мгновенного создания карточки для сторис в соцсетях."
+        },
+        {
+            step: "Шаг 3 из 4",
+            title: "II. Аптечка",
+            text: "Скорая духовная помощь для вашей души. Если вы чувствуете тревогу, вину, обиду, усталость или одиночество — выберите состояние, и приложение откроет точечное утешение."
+        },
+        {
+            step: "Шаг 4 из 4",
+            title: "III. Летопись и Камни памяти",
+            text: "Ваш личный дневник. Включает в себя вкладку «Авен-Езер» (по 1 Царств 7:12), где вы можете записывать молитвенные нужды и отмечать золотой меткой дни, когда Господь ответил на ваши молитвы."
+        }
+    ];
+    let currentOnbStep = 0;
+
+    function checkOnboarding() {
+        if (!localStorage.getItem('svitok_onboarded')) {
+            document.getElementById('onboarding-modal').classList.add('active');
+        }
+    }
+
+    function nextOnboardingStep() {
+        currentOnbStep++;
+        if (currentOnbStep < onboardingSteps.length) {
+            const data = onboardingSteps[currentOnbStep];
+            document.getElementById('onb-step').textContent = data.step;
+            document.getElementById('onb-title').textContent = data.title;
+            document.getElementById('onb-text').textContent = data.text;
+            if (currentOnbStep === onboardingSteps.length - 1) {
+                document.getElementById('onb-next-btn').textContent = "Начать чтение";
+            }
+        } else {
+            closeOnboarding();
+        }
+    }
+
+    function closeOnboarding() {
+        localStorage.setItem('svitok_onboarded', 'true');
+        document.getElementById('onboarding-modal').classList.remove('active');
+    }
 
     function safeGetItem(key, defaultVal) {
         try { return localStorage.getItem(key) || defaultVal; } 
@@ -666,51 +1105,21 @@
         catch (e) {}
     }
 
-    window.addEventListener('load', () => {
-        updateRollers();
-        setTimeout(() => {
-            const splash = document.getElementById('splash-screen');
-            if(splash) {
-                splash.style.opacity = '0';
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    document.body.style.overflowY = 'auto';
-                    updateRollers();
-                }, 1200);
-            }
-        }, 3000); 
-    });
-
-    function updateRollers() {
-        const y = window.scrollY;
+    function updateScrollProgress() {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
         const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        const progress = Math.min(1, Math.max(0, y / maxScroll));
-
-        const topCyl = document.getElementById('cylinder-top');
-        const botCyl = document.getElementById('cylinder-bottom');
-
-        const minThickness = 22;
-        const maxThickness = 46;
-        const topHeight = minThickness + (maxThickness - minThickness) * progress;
-        const botHeight = maxThickness - (maxThickness - minThickness) * progress;
-
-        if(topCyl) {
-            topCyl.style.height = `${topHeight}px`;
-            topCyl.style.backgroundPosition = `0 0, 0 0, 0 ${-y * 0.55}px`;
-        }
-        if(botCyl) {
-            botCyl.style.height = `${botHeight}px`;
-            botCyl.style.backgroundPosition = `0 0, 0 0, 0 ${-y * 0.55}px`;
-        }
+        const pct = Math.min(100, Math.max(0, (y / maxScroll) * 100));
+        const bar = document.getElementById('unroll-bar');
+        if (bar) bar.style.width = pct + '%';
     }
 
-    window.addEventListener('scroll', updateRollers);
-    window.addEventListener('resize', updateRollers);
+    window.addEventListener('scroll', updateScrollProgress);
+    window.addEventListener('resize', updateScrollProgress);
 
     function applyTheme(theme) {
         document.body.setAttribute('data-theme', theme);
         const btn = document.getElementById('theme-toggle-btn');
-        if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+        if (btn) btn.textContent = theme === 'dark' ? 'День' : 'Ночь';
     }
 
     function toggleTheme() {
@@ -719,104 +1128,194 @@
         safeSetItem('app_theme', currentTheme);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        currentTheme = safeGetItem('app_theme', 'light');
-        applyTheme(currentTheme);
-
-        const themeBtn = document.getElementById('theme-toggle-btn');
-        if(themeBtn) {
-            themeBtn.addEventListener('click', toggleTheme);
-            themeBtn.removeAttribute('onclick');
-        }
-
-        try {
-            const savedNotes = localStorage.getItem('spiritual_notes');
-            if(savedNotes) memoryNotes = JSON.parse(savedNotes);
-        } catch(e) {}
-
-        setDateBadge();
-        loadDailyContent();
-        loadNotes();
-        updateRollers();
-    });
-
     function switchTab(tabId, btnElement) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         if (btnElement) btnElement.classList.add('active');
-        setTimeout(updateRollers, 20);
+        window.scrollTo(0, 0);
+        setTimeout(updateScrollProgress, 30);
     }
 
     function setDateBadge() {
-        const now = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('current-date').textContent = now.toLocaleDateString('ru-RU', options);
+        try {
+            const now = new Date();
+            const options = { weekday: 'short', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('ru-RU', options);
+        } catch(e) {}
     }
 
     function loadDailyContent(customIndex = null) {
         const now = new Date();
-        const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-        const index = customIndex !== null ? customIndex : (dayOfYear % DAILY_DATABASE.length);
-        const data = DAILY_DATABASE[index];
+        const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+        currentDailyIndex = customIndex !== null ? customIndex : (dayOfYear % DAILY_DATABASE.length);
+        const data = DAILY_DATABASE[currentDailyIndex];
         
         document.getElementById('daily-verse-ref').textContent = data.ref;
         document.getElementById('daily-verse-text').textContent = `«${data.verse}»`;
-        document.getElementById('sermon-title').textContent = data.title || 'Слово на сегодня';
+        document.getElementById('daily-context-text').textContent = data.context;
+        document.getElementById('daily-context-box').classList.remove('active');
+        document.getElementById('sermon-title').textContent = data.title;
         document.getElementById('sermon-body').innerHTML = data.content;
-        setTimeout(updateRollers, 20);
+        setTimeout(updateScrollProgress, 20);
+    }
+
+    function toggleContextBox() {
+        document.getElementById('daily-context-box').classList.toggle('active');
     }
 
     function generateNewDaily() {
-        loadDailyContent(Math.floor(Math.random() * DAILY_DATABASE.length));
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        let nextIndex = (currentDailyIndex + 1) % DAILY_DATABASE.length;
+        loadDailyContent(nextIndex);
+        window.scrollTo(0, 0);
     }
 
-    function toggleSilenceTimer() {
-        const btn = document.getElementById('timer-btn');
-        const text = document.getElementById('timer-text');
+    function shareAsStoryCard() {
+        const data = DAILY_DATABASE[currentDailyIndex];
+        const canvas = document.createElement('canvas');
+        canvas.width = 1080;
+        canvas.height = 1920; 
+        const ctx = canvas.getContext('2d');
 
-        if (isTimerRunning) {
-            clearInterval(timerInterval);
-            isTimerRunning = false;
-            timeLeft = 60;
-            text.textContent = "01:00";
-            btn.textContent = "Начать минуту тишины";
-        } else {
-            isTimerRunning = true;
-            btn.textContent = "Остановить";
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                let sec = timeLeft < 10 ? "0" + timeLeft : timeLeft;
-                text.textContent = `00:${sec}`;
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    isTimerRunning = false;
-                    text.textContent = "Тишина завершена";
-                    btn.textContent = "Начать заново";
-                    timeLeft = 60;
-                }
-            }, 1000);
+        ctx.fillStyle = '#120b07';
+        ctx.fillRect(0, 0, 1080, 1920);
+
+        ctx.fillStyle = '#f4e5c8';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        ctx.shadowBlur = 50;
+        ctx.fillRect(100, 200, 880, 1520);
+        ctx.shadowBlur = 0; 
+
+        ctx.strokeStyle = '#b38f5d';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(120, 220, 840, 1480);
+
+        ctx.fillStyle = '#a8201a';
+        ctx.font = 'bold 50px serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('✝', 540, 320);
+
+        ctx.fillStyle = '#6e6254';
+        ctx.font = '28px sans-serif';
+        ctx.fillText('С В И Т О К', 540, 380);
+
+        ctx.fillStyle = '#241306';
+        ctx.font = 'italic 54px "Cormorant Garamond", Georgia, serif';
+        
+        const words = `«${data.verse}»`.split(' ');
+        let line = '';
+        let y = 600;
+        const maxWidth = 740;
+
+        for (let i = 0; i < words.length; i++) {
+            let testLine = line + words[i] + ' ';
+            let metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && i > 0) {
+                ctx.fillText(line, 540, y);
+                line = words[i] + ' ';
+                y += 75;
+            } else {
+                line = testLine;
+            }
         }
+        ctx.fillText(line, 540, y);
+
+        ctx.fillStyle = '#a8201a';
+        ctx.font = 'bold 38px sans-serif';
+        ctx.fillText(data.ref.toUpperCase(), 540, y + 150);
+
+        ctx.fillStyle = '#f6f1e6';
+        ctx.font = '26px sans-serif';
+        ctx.fillText('yurifox91.github.io/Svitok-app', 540, 1630);
+
+        canvas.toBlob(function(blob) {
+            const file = new File([blob], "svitok-story.png", { type: "image/png" });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: 'Свиток',
+                    text: `«${data.verse}» (${data.ref})`
+                }).catch(() => {});
+            } else {
+                const link = document.createElement('a');
+                link.download = 'svitok-story.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+        }, 'image/png');
+    }
+
+    function selectRemedy(index, btnElement) {
+        document.querySelectorAll('.remedy-chip').forEach(b => b.classList.remove('active'));
+        if (btnElement) btnElement.classList.add('active');
+        const item = REMEDIES_DATABASE[index];
+        document.getElementById('remedy-verse').textContent = `«${item.verse}»`;
+        document.getElementById('remedy-ref').textContent = item.ref;
+        document.getElementById('remedy-body').innerHTML = item.content;
+        setTimeout(updateScrollProgress, 20);
+    }
+
+    function switchJournalMode(mode) {
+        currentJournalMode = mode;
+        document.getElementById('sub-tab-diary').classList.toggle('active', mode === 'diary');
+        document.getElementById('sub-tab-prayers').classList.toggle('active', mode === 'prayer');
+
+        const heading = document.getElementById('journal-heading');
+        const subtitle = document.getElementById('journal-subtitle');
+        const openBtn = document.getElementById('open-editor-btn');
+        const templateWrap = document.getElementById('evening-template-wrap');
+        const titleInput = document.getElementById('note-title');
+        const textInput = document.getElementById('note-text');
+
+        if (mode === 'prayer') {
+            heading.textContent = 'Камни памяти';
+            subtitle.style.display = 'block';
+            openBtn.textContent = '+ Записать нужду';
+            templateWrap.style.display = 'none';
+            titleInput.placeholder = 'О ком или о чем молитва...';
+            textInput.placeholder = 'Суть прошения...';
+        } else {
+            heading.textContent = 'Личные записи';
+            subtitle.style.display = 'none';
+            openBtn.textContent = '+ Новая запись';
+            templateWrap.style.display = 'block';
+            titleInput.placeholder = 'Заголовок...';
+            textInput.placeholder = 'Текст записи...';
+        }
+
+        loadNotes();
+    }
+
+    function insertEveningTemplate() {
+        const titleInput = document.getElementById('note-title');
+        const textInput = document.getElementById('note-text');
+        const todayStr = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+        if (!titleInput.value.trim()) {
+            titleInput.value = `Итог дня • ${todayStr}`;
+        }
+        textInput.value = `1. За что я сегодня благодарен Богу?\n— \n\n2. В чем я сегодня оступился или поддался суете?\n— \n\n3. Кому я могу послужить или за кого помолиться завтра?\n— `;
+        textInput.focus();
     }
 
     function toggleNoteEditor() {
         const editor = document.getElementById('note-editor');
         editor.classList.toggle('active');
         if (editor.classList.contains('active')) document.getElementById('note-title').focus();
-        setTimeout(updateRollers, 20);
     }
 
     function saveNote() {
         const title = document.getElementById('note-title').value.trim();
         const text = document.getElementById('note-text').value.trim();
-        if (!title || !text) { alert('Летопись не терпит пустоты. Укажите заголовок и мысль.'); return; }
+        if (!title || !text) return;
 
         const newNote = { 
             id: Date.now(), 
+            type: currentJournalMode,
+            answered: false,
+            answeredDate: null,
             title, 
             text, 
-            date: new Date().toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) 
+            date: new Date().toLocaleDateString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) 
         };
         
         memoryNotes.unshift(newNote);
@@ -826,40 +1325,86 @@
         document.getElementById('note-text').value = '';
         document.getElementById('note-editor').classList.remove('active');
         loadNotes();
-        setTimeout(updateRollers, 20);
+    }
+
+    function toggleAnsweredStone(id) {
+        memoryNotes = memoryNotes.map(n => {
+            if (n.id === id) {
+                const nowAnswered = !n.answered;
+                return {
+                    ...n,
+                    answered: nowAnswered,
+                    answeredDate: nowAnswered ? new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : null
+                };
+            }
+            return n;
+        });
+        safeSetItem('spiritual_notes', JSON.stringify(memoryNotes));
+        loadNotes();
+    }
+
+    function getFilteredNotesByMode() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        return memoryNotes.filter(n => {
+            const noteType = n.type || 'diary';
+            return noteType === currentJournalMode && (n.title.toLowerCase().includes(query) || n.text.toLowerCase().includes(query));
+        });
     }
 
     function loadNotes() {
-        if (memoryNotes.length === 0) {
-            document.getElementById('notes-list').innerHTML = `<p style="color: var(--ink-light); font-style: italic; text-align: center; padding: 2rem; font-size: 1.2rem;">Страницы вашей летописи пока пусты.</p>`;
+        const list = getFilteredNotesByMode();
+        if (list.length === 0) {
+            const emptyMsg = currentJournalMode === 'prayer' 
+                ? 'Список молитвенных нужд пуст.' 
+                : 'Записей пока нет.';
+            document.getElementById('notes-list').innerHTML = `<p style="color: var(--ink-muted); padding: 2rem 0; font-size: 1.2rem;">${emptyMsg}</p>`;
             return;
         }
-        renderNotes(memoryNotes);
+        renderNotes(list);
     }
 
     function filterNotes() {
-        const query = document.getElementById('search-input').value.toLowerCase();
-        const filtered = memoryNotes.filter(n => n.title.toLowerCase().includes(query) || n.text.toLowerCase().includes(query));
-        renderNotes(filtered);
+        renderNotes(getFilteredNotesByMode());
     }
 
     function deleteNote(id) {
         memoryNotes = memoryNotes.filter(n => n.id !== id);
         safeSetItem('spiritual_notes', JSON.stringify(memoryNotes));
         loadNotes();
-        setTimeout(updateRollers, 20);
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m]);
     }
 
     function renderNotes(notesArray) {
-        document.getElementById('notes-list').innerHTML = notesArray.map(n => `
-            <div class="note-item">
-                <button class="delete-note" onclick="deleteNote(${n.id})">Стереть</button>
-                <h4>${n.title.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m])}</h4>
-                <div class="note-date">${n.date}</div>
-                <p style="white-space: pre-line; font-size: 1.2rem;">${n.text.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m])}</p>
-            </div>
-        `).join('');
+        document.getElementById('notes-list').innerHTML = notesArray.map(n => {
+            const isPrayer = (n.type || 'diary') === 'prayer';
+            const stoneClass = (isPrayer && n.answered) ? 'answered-stone' : '';
+            const badgeHtml = (isPrayer && n.answered) 
+                ? `<div class="ebenezer-badge">Авен-Езер • Ответ получен (${n.answeredDate || ''})</div>` 
+                : '';
+            const prayerBtnHtml = isPrayer 
+                ? `<div class="note-actions-row">
+                        <button type="button" class="stone-toggle-btn" onclick="toggleAnsweredStone(${n.id})">
+                            ${n.answered ? 'Снять отметку' : 'Отметить ответ Божий'}
+                        </button>
+                   </div>`
+                : '';
+
+            return `
+                <div class="note-item ${stoneClass}">
+                    <button type="button" class="delete-note" onclick="deleteNote(${n.id})">Удалить</button>
+                    ${badgeHtml}
+                    <h4>${escapeHtml(n.title)}</h4>
+                    <div class="note-date">${n.date}</div>
+                    <p style="white-space: pre-line; font-size: 1.35rem;">${escapeHtml(n.text)}</p>
+                    ${prayerBtnHtml}
+                </div>
+            `;
+        }).join('');
     }
-</script>
-</body>
-</html>
+
+    (function init() {
+        currentTheme = safeGetItem('app_theme', 'light');
+        apply
