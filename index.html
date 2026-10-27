@@ -7,32 +7,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-table: #1a120c; 
-            --parchment-bg: #f4e8d2; 
-            --ink-color: #3b2716; 
+            --bg-table: #160f0a; 
+            --parchment-bg: #efe0c4; 
+            --parchment-edge: #c7a97b;
+            --ink-color: #362212; 
             --ink-light: #6e4e32;
             --accent: #8c2626; 
             --wood-dark: #3a200d;
             --wood-light: #7a4d2c;
+            --paper-line-dark: rgba(65, 38, 15, 0.55);
+            --paper-line-light: rgba(255, 248, 231, 0.65);
         }
         
         [data-theme="dark"] {
-            --bg-table: #080503;
-            --parchment-bg: #2b2013; 
-            --ink-color: #d4c0a5; 
+            --bg-table: #050302;
+            --parchment-bg: #261c10; 
+            --parchment-edge: #140d06;
+            --ink-color: #d8c4a8; 
             --ink-light: #a38c73;
-            --accent: #a33b3b;
+            --accent: #b04141;
+            --paper-line-dark: rgba(0, 0, 0, 0.8);
+            --paper-line-light: rgba(255, 220, 170, 0.12);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         body {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
             background-color: var(--bg-table);
             color: var(--ink-color);
             line-height: 1.6;
@@ -54,7 +59,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.5s ease;
+            transition: opacity 1.2s ease;
         }
 
         .splash-light-beam {
@@ -66,12 +71,12 @@
             height: 120vh;
             background: linear-gradient(to bottom, transparent, #ffeaa7, #ffffff, transparent);
             box-shadow: 0 0 30px 10px #ffeaa7, 0 0 80px 30px #f5cd79;
-            animation: beamDescend 3s ease-out forwards;
+            animation: beamDescend 2.5s ease-out forwards;
             z-index: 1;
         }
 
         .splash-title {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
             font-size: 5rem;
             font-weight: 700;
             color: transparent;
@@ -81,7 +86,7 @@
             background: linear-gradient(to bottom, #ffffff, #f5cd79);
             -webkit-background-clip: text;
             background-clip: text;
-            animation: titleReveal 3.5s ease-out 1s forwards;
+            animation: titleReveal 2.5s ease-out 0.8s forwards;
             z-index: 2;
         }
 
@@ -109,51 +114,102 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 960px;
-            height: 40px;
+            height: 58px;
             z-index: 100;
             display: flex;
             align-items: center;
+            pointer-events: none;
         }
-        .roller.top { top: 0; }
-        .roller.bottom { bottom: 0; }
+
+        .roller.top { 
+            top: 0; 
+            background: linear-gradient(to bottom, var(--bg-table) 80%, transparent 100%);
+            padding-top: 4px;
+        }
+        .roller.bottom { 
+            bottom: 0; 
+            background: linear-gradient(to top, var(--bg-table) 80%, transparent 100%);
+            padding-bottom: 4px;
+        }
 
         .roller-cap {
-            width: 30px;
+            width: 32px;
             height: 50px;
-            background: linear-gradient(to bottom, #2b1608, #5c351a, #1a0d05);
+            background: linear-gradient(to bottom, #1e0d04 0%, #5c351a 35%, #8a5229 50%, #3b200c 80%, #120702 100%);
             border-radius: 6px;
-            box-shadow: inset 0 0 8px #000, 0 5px 10px rgba(0,0,0,0.8);
-            z-index: 101;
+            box-shadow: inset 0 0 8px #000, 0 6px 14px rgba(0,0,0,0.9);
+            z-index: 103;
+            flex-shrink: 0;
         }
+        .roller-cap.left { border-right: 4px solid #b5892e; }
+        .roller-cap.right { border-left: 4px solid #b5892e; }
         
         .roller-cylinder {
             flex: 1;
-            height: 34px;
-            background-image: 
-                linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(255,255,255,0.15) 30%, rgba(0,0,0,0.8) 100%),
-                repeating-linear-gradient(to bottom, var(--wood-dark) 0px, var(--wood-light) 6px, var(--wood-dark) 12px);
-            background-size: 100% 100%, 100% 100%;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.9);
-            margin: 0 -5px; 
+            height: 24px;
+            margin: 0 -4px; 
             position: relative;
-            z-index: 100;
+            z-index: 101;
+            border-radius: 4px;
+            background-color: var(--parchment-bg);
+            background-image: 
+                linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 20%, rgba(255,255,255,0.35) 38%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.65) 85%, rgba(0,0,0,0.95) 100%),
+                linear-gradient(to right, var(--wood-dark) 0px, var(--wood-light) 18px, #3d2310 18px, #d4bc94 21px, #4a2c14 24px, #e6d2b5 27px, #3d2310 30px, transparent 30px, transparent calc(100% - 30px), #3d2310 calc(100% - 30px), #e6d2b5 calc(100% - 27px), #4a2c14 calc(100% - 24px), #d4bc94 calc(100% - 21px), #3d2310 calc(100% - 18px), var(--wood-light) calc(100% - 18px), var(--wood-dark) 100%),
+                repeating-linear-gradient(to bottom, var(--parchment-bg) 0px, var(--parchment-bg) 4px, var(--paper-line-light) 4px, var(--paper-line-dark) 6px, #2b1708 7px);
+            background-size: 100% 100%, 100% 100%, 100% 14px;
+            box-shadow: 0 14px 24px rgba(0,0,0,0.95), 0 4px 8px rgba(0,0,0,0.8);
+        }
+
+        .roller.bottom .roller-cylinder {
+            height: 46px;
+        }
+
+        .scroll-fold-shadow {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 900px;
+            height: 35px;
+            z-index: 90;
+            pointer-events: none;
+        }
+        .scroll-fold-shadow.top {
+            top: 42px;
+            background: linear-gradient(to bottom, rgba(20, 10, 2, 0.75) 0%, rgba(60, 35, 12, 0.25) 45%, transparent 100%);
+        }
+        .scroll-fold-shadow.bottom {
+            bottom: 42px;
+            background: linear-gradient(to top, rgba(20, 10, 2, 0.75) 0%, rgba(60, 35, 12, 0.25) 45%, transparent 100%);
         }
 
         .scroll-wrapper {
             width: 100%;
             max-width: 900px;
-            margin: 20px 0; 
-            padding: 40px 50px;
+            margin: 0; 
+            padding: 80px 50px;
             min-height: 100vh;
             background-color: var(--parchment-bg);
-            background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-            box-shadow: inset 0 0 60px rgba(100,50,0,0.4), 0 0 30px rgba(0,0,0,0.9);
+            background-image: 
+                radial-gradient(circle at 18% 22%, rgba(130, 85, 35, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 82% 55%, rgba(110, 65, 20, 0.16) 0%, transparent 50%),
+                radial-gradient(circle at 35% 85%, rgba(140, 90, 40, 0.12) 0%, transparent 40%),
+                repeating-linear-gradient(0deg, rgba(90, 55, 20, 0.03) 0px, rgba(90, 55, 20, 0.03) 1px, transparent 1px, transparent 3px);
+            box-shadow: 
+                inset 0 0 75px rgba(95, 50, 10, 0.55), 
+                inset 0 0 20px rgba(70, 35, 5, 0.45),
+                0 0 35px rgba(0,0,0,0.95);
+            border-left: 2px solid var(--parchment-edge);
+            border-right: 2px solid var(--parchment-edge);
             position: relative;
             z-index: 10;
         }
 
         [data-theme="dark"] .scroll-wrapper {
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.95), 0 0 30px rgba(0,0,0,0.9);
+            box-shadow: 
+                inset 0 0 90px rgba(0,0,0,0.95), 
+                inset 0 0 30px rgba(0,0,0,0.85),
+                0 0 35px rgba(0,0,0,0.95);
         }
 
         header {
@@ -182,25 +238,34 @@
             font-size: 1.2rem;
         }
 
+        /* УВЕЛИЧЕННЫЕ И РАЗДЕЛЕННЫЕ ВКЛАДКИ ОГЛАВЛЕНИЯ */
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            align-items: center;
+            gap: 1.2rem;
             margin-bottom: 2.5rem;
             flex-wrap: wrap;
+            border-bottom: 1px dashed var(--ink-light);
+            padding-bottom: 1.2rem;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            font-size: 1.35rem;
             font-weight: 600;
             color: var(--ink-light);
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            padding: 0.3rem 0.8rem;
             transition: 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent);
         }
 
         .tab-btn.active {
@@ -208,12 +273,18 @@
             text-decoration: underline;
             text-decoration-color: var(--accent);
             text-decoration-thickness: 2px;
-            text-underline-offset: 6px;
+            text-underline-offset: 8px;
         }
 
-        .section { display: none; animation: fadeIn 0.5s ease; }
+        .tab-separator {
+            color: var(--ink-light);
+            opacity: 0.4;
+            font-size: 1.1rem;
+            user-select: none;
+        }
+
+        .section { display: none; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .date-badge {
             font-style: italic;
@@ -270,10 +341,10 @@
         }
 
         .prayer-box {
-            background-color: transparent;
+            background-color: rgba(140, 38, 38, 0.03);
             border: 2px solid var(--accent);
             padding: 2.5rem 2rem 2rem 2rem;
-            margin-top: 3rem;
+            margin-top: 3.5rem;
             font-style: italic;
             font-size: 1.35rem;
             text-align: center;
@@ -292,33 +363,36 @@
             font-size: 1.8rem;
         }
 
-        /* Дневник */
-        .search-input {
+        /* Интерактивный блок «Минута тишины» */
+        .silence-box {
+            border: 1px solid var(--ink-light);
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            background: rgba(110, 78, 50, 0.03);
+        }
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: var(--accent);
+        }
+
+        /* Дневник — ИСПРАВЛЕННЫЕ КНОПКИ В ПОЛЯХ */
+        .search-input, .note-input {
             width: 100%;
             padding: 0.5rem 0;
             background: transparent;
             border: none;
             border-bottom: 2px solid var(--ink-light);
             color: var(--ink-color);
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
             font-size: 1.4rem;
             margin-bottom: 1.5rem;
             outline: none;
         }
 
-        .note-input {
-            width: 100%;
-            padding: 0.5rem 0;
-            background: transparent;
-            border: none;
-            border-bottom: 2px dashed var(--ink-light);
-            color: var(--ink-color);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            outline: none;
-        }
+        .note-input { border-bottom-style: dashed; font-weight: 600; }
 
         .note-textarea {
             width: 100%;
@@ -326,7 +400,7 @@
             background: transparent;
             border: none;
             color: var(--ink-color);
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
             font-size: 1.3rem;
             line-height: 32px;
             outline: none;
@@ -338,9 +412,17 @@
             display: none;
             margin-top: 2rem;
             border: 1px solid var(--ink-light);
-            padding: 2rem;
+            padding: 1.5rem;
+            width: 100%;
         }
         .note-editor.active { display: block; }
+
+        .editor-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
 
         .note-item {
             margin-bottom: 2.5rem;
@@ -349,7 +431,7 @@
             position: relative;
         }
 
-        .note-item h4 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--accent); }
+        .note-item h4 { font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--accent); padding-right: 4rem; }
         .note-date { font-size: 1rem; font-style: italic; color: var(--ink-light); margin-bottom: 1rem; }
 
         .delete-note {
@@ -371,12 +453,11 @@
             border: 2px solid var(--ink-color);
             padding: 0.6rem 1.5rem;
             font-size: 1.2rem;
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
             cursor: pointer;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.2s;
         }
 
         button.action-btn:hover {
@@ -395,50 +476,57 @@
         }
 
         @media (max-width: 650px) {
-            .scroll-wrapper { padding: 30px 20px; }
+            .scroll-wrapper { padding: 75px 20px; }
             .verse-text { font-size: 1.8rem; padding: 0; }
             .sermon-title { font-size: 2rem; }
-            .nav-tabs { gap: 1rem; }
-            .tab-btn { font-size: 1.1rem; }
+            .nav-tabs { gap: 0.6rem; }
+            .tab-btn { font-size: 0.95rem; padding: 0.2rem 0.4rem; }
+            .tab-separator { display: none; }
             .prayer-box { padding: 2rem 1.5rem 1.5rem; }
+            .roller-cap { width: 22px; }
+            .editor-buttons { flex-direction: column; }
+            button.action-btn { width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body data-theme="light">
 
-<!-- ЗАСТАВКА -->
 <div id="splash-screen">
     <div class="splash-light-beam"></div>
     <div class="splash-title">Свиток</div>
 </div>
 
-<!-- ВЕРХНИЙ ВАЛИК СВИТКА -->
 <div class="roller top">
     <div class="roller-cap left"></div>
     <div class="roller-cylinder" id="cylinder-top"></div>
     <div class="roller-cap right"></div>
 </div>
+<div class="scroll-fold-shadow top"></div>
 
-<!-- НИЖНИЙ ВАЛИК СВИТКА -->
+<div class="scroll-fold-shadow bottom"></div>
 <div class="roller bottom">
     <div class="roller-cap left"></div>
     <div class="roller-cylinder" id="cylinder-bottom"></div>
     <div class="roller-cap right"></div>
 </div>
 
-<!-- ОСНОВНОЙ ПЕРГАМЕНТ -->
 <div class="scroll-wrapper">
     <header>
         <div class="logo">Свиток</div>
         <button class="icon-btn" id="theme-toggle-btn" title="Ночной свиток">🌙</button>
     </header>
 
+    <!-- Раздельное структурированное оглавление -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('daily')">Стих и размышление</button>
-        <button class="tab-btn" onclick="switchTab('notebook')">Летопись души</button>
+        <button class="tab-btn active" onclick="switchTab('daily', this)">Стих дня</button>
+        <span class="tab-separator">•</span>
+        <button class="tab-btn" onclick="switchTab('seeker', this)">О тишине и смысле</button>
+        <span class="tab-separator">•</span>
+        <button class="tab-btn" onclick="switchTab('notebook', this)">Летопись души</button>
     </div>
 
     <main>
+        <!-- Вкладка: Стих дня -->
         <section id="daily" class="section active">
             <div class="verse-card">
                 <div class="date-badge" id="current-date">Загрузка...</div>
@@ -455,18 +543,40 @@
             </div>
         </section>
 
+        <!-- Вкладка: О тишине и смысле (с практичным таймером паузы) -->
+        <section id="seeker" class="section">
+            <h1 class="sermon-title" style="margin-bottom: 2rem;">Тишина посреди шума</h1>
+            <div class="sermon-content">
+                <p>Современный человек живет в эпицентре бесконечного шума. Мы окружены экранами, дедлайнами, чужими мнениями и постоянной тревожностью за завтрашний день. Нам кажется, что если мы остановимся хотя бы на миг, то проиграем. Но душа под этой броней суеты кричит об одном — об усталости и жажде подлинности.</p>
+                <p>Иисус из Назарета никогда не был похож на религиозного догматика. Он приходил к тем, кто сомневался, к уставшим бунтарям, к изгоям и интеллектуальным скептикам. Он не требовал слепого согласия; Он предлагал живой диалог. Его фраза <em>«Придите ко Мне... и успокоите души ваши»</em> обращена не к тем, кто во всем уверен, а к тем, кто надломлен бременем этого мира.</p>
+                <p>Если ты смотришь на веру со скепсисом — это нормально. Христос не боялся вопросов Фомы и не осуждал чужие сомнения. Попробуй сегодня просто выключить внутренний спор и побыть в тишине. Возможно, за этой тишиной стоит Тот, Кто ждет возможности коснуться твоего сердца без слов.</p>
+            </div>
+
+            <!-- Практичный инструмент: Минута тишины -->
+            <div class="silence-box">
+                <p style="font-size: 1.2rem; font-style: italic;">Инструмент для разгрузки разума:</p>
+                <div class="timer-display" id="timer-text">01:00</div>
+                <button class="action-btn" id="timer-btn" onclick="toggleSilenceTimer()">Начать минуту тишины</button>
+            </div>
+
+            <div class="prayer-box" style="margin-top: 3rem;">
+                «Если ты ищешь смысл там, где рушатся привычные опоры, помни: свет светит во тьме, и тьма не объяла его».
+            </div>
+        </section>
+
+        <!-- Вкладка: Дневник -->
         <section id="notebook" class="section">
             <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2rem;">
-                <h2 style="font-size: 2.2rem; text-transform: uppercase;">Летопись души</h2>
+                <h2 style="font-size: 2.2rem; text-transform: uppercase;">Мой дневник</h2>
                 <button class="action-btn" onclick="toggleNoteEditor()">Взять перо</button>
             </div>
             
-            <input type="text" id="search-input" class="search-input" placeholder="Поиск по записям..." oninput="filterNotes()">
+            <input type="text" id="search-input" class="search-input" placeholder="Поиск по свиткам..." oninput="filterNotes()">
             
             <div id="note-editor" class="note-editor">
-                <input type="text" id="note-title" class="note-input" placeholder="Заголовок (например: Благодарности...)">
+                <input type="text" id="note-title" class="note-input" placeholder="Заголовок (например: Мысли о смысле...)">
                 <textarea id="note-text" class="note-textarea" placeholder="Начните писать здесь..."></textarea>
-                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <div class="editor-buttons">
                     <button class="action-btn" onclick="saveNote()">Запечатлеть</button>
                     <button class="action-btn" style="border-color: var(--ink-light); color: var(--ink-light);" onclick="toggleNoteEditor()">Отложить</button>
                 </div>
@@ -477,39 +587,38 @@
     </main>
 
     <footer>
-        Приложение «Свиток» • Разработано by Yuri Lisovsky
+        Приложение «Свиток»
     </footer>
 </div>
 
 <script>
-    // ОРИГИНАЛЬНЫЕ ЦИТАТЫ И РАЗМЫШЛЕНИЯ ИЗВЕСТНЫХ БОГОСЛОВОВ И ПРОПОВЕДНИКОВ
     const DAILY_DATABASE = [
         {
             ref: "К Филиппийцам 4:13",
             verse: "Все могу в укрепляющем меня Христе Иисусе.",
-            title: "Вседостаточность Христа",
+            title: "Слово на сегодня",
             content: `
                 <p>Тайная жизнь верующего держится на невидимом союзе со Спасителем. Когда апостол Павел говорит: «Все могу в укрепляющем меня Христе», он не хвалится своей выносливостью или духовной закалкой. Он указывает на внешний, неиссякаемый источник. Христианин подобен тростнику на ветру: сам по себе он слаб и падает от малейшего шторма, но будучи соединен с живым Корнем, он устоит перед лицом любых испытаний.</p>
                 <p>В самих себе мы не имеем ресурса для победы над грехом, страхом или унынием. Но во Христе нам дарована полнота. Как нищий, получивший неограниченный доступ к царской сокровищнице, верующий черпает силу не из собственных заслуг, а из совершенной жертвы и благодати Господа Иисуса.</p>
-                <div class="author-sign">Чарльз Сперджен, из сборника утренних размышлений «Утром и вечером»</div>
+                <div class="author-sign">Чарльз Сперджен, из сборника «Утром и вечером»</div>
                 <div class="prayer-box">Господь Иисус, я исповедую свою слабость и немощь. Научи меня черпать победу и крепость не из собственных усилий, а из Твоего непререкаемого источника. Аминь.</div>
             `
         },
         {
             ref: "Притчи Соломона 3:5",
             verse: "Надейся на Господа всем сердцем твоим, и не полагайся на разум твой.",
-            title: "Укрощение человеческого разума",
+            title: "Слово на сегодня",
             content: `
                 <p>Вера начинается там, где заканчивается человеческий расчет. Наш разум — это прекрасный дар Творца для управления земными делами, но он совершенно слеп, когда дело касается путей провидения и нашего духовного будущего. Разум шепчет нам о тупиках и рисках, в то время как истинная вера смотрит на пронзенные руки Христа и знает, что для Него нет безвыходных ситуаций.</p>
                 <p>Полагаться на Господа всем сердцем означает перестать спорить с Его волей и вырывать карту из Его отцовских рук. Доверие означает принимать Божье сердце даже тогда, когда мы абсолютно не понимаем Его руку. Тот, кто отдал за нас Свою жизнь на Голгофе, не способен ошибиться в деталях нашей повседневной дороги.</p>
-                <div class="author-sign">Томас Уотсон, из книги «Божественное содержание»</div>
+                <div class="author-sign">Томас Уотсон, из книги «Божественное утешение»</div>
                 <div class="prayer-box">Господь Иисус, прости мне мои постоянные сомнения и попытки просчитать всё собственным умом. Я предаю свое завтра в Твое любящее сердце. Аминь.</div>
             `
         },
         {
             ref: "Псалтирь 22:1",
             verse: "Господь — Пастырь мой; я ни в чем не буду нуждаться.",
-            title: "Забота Доброго Пастыря",
+            title: "Слово на сегодня",
             content: `
                 <p>Овца не заботится о том, где она будет искать воду завтра или как защититься от хищников — это полная ответственность пастыря. Наша главная беда заключается в том, что мы пытаемся одновременно играть роль беспомощной овцы и роль всезнающего пастыря своей жизни, от чего и сходим с ума от тревог.</p>
                 <p>Иисус Христос — Добрый Пастырь, отдал жизнь за Свое стадо. Если Он заплатил за нас такую искупительную цену, неужели Он оставит нас без хлеба, утешения или водительства сегодня? Его пажить изобильна, а защита абсолютна. Снимите с себя бремя пастуха своей жизни и доверьтесь Его посоху.</p>
@@ -520,7 +629,7 @@
         {
             ref: "Иеремия 29:11",
             verse: "Ибо только Я знаю намерения, какие имею о вас, говорит Господь, намерения во благо, а не на зло...",
-            title: "Защищенные суверенной любовью",
+            title: "Слово на сегодня",
             content: `
                 <p>Нас формирует не то, что происходит с нами в часы радости, а то, к чему мы обращаемся в минуты глубочайшего кризиса. Когда привычные опоры рушатся, человеческому сердцу свойственно думать, что Бог оставил его или держит на него гнев. Но Евангелие открывает нам совершенно иную истину: наш Небесный Отец смотрит на нас исключительно через призму совершенного искупления Своего Сына.</p>
                 <p>Намерения Иисуса Христа о нас не меняются от штормов. Все трудности, через которые Он нас проводит, служат одной благородной цели — сделать нас причастниками Его святости. То, что кажется нам крушением планов, в Его мастерской является процессом огранки драгоценного камня.</p>
@@ -531,145 +640,21 @@
         {
             ref: "От Матфея 11:28",
             verse: "Придите ко Мне, все труждающиеся и обремененные, и Я успокою вас.",
-            title: "Прибежище для изнуренной души",
+            title: "Слово на сегодня",
             content: `
                 <p>Верующему полезно чаще размышлять о том, что Христос не просто ожидает нас на небесах — Он уже сейчас предлагает Свой глубокий покой нашим изнуренным душам. Мы часто носим на себе тяжелый груз вины, обид, самоедства и стремления всем угодить, хотя Спаситель давно прибил этот греховный багаж к Голгофскому древу.</p>
                 <p>Иисус не порицает нас за нашу усталость. Он с нежностью произносит: «Придите». Это личное приглашение к Тому, Кто знает о нас всё и никогда не оттолкнет кающегося грешника. Прийти к Нему — значит перестать оправдываться перед миром и принести Ему свое разбитое сердце.</p>
                 <div class="author-sign">Ричард Бакстер, из книги «Вечный покой святых»</div>
                 <div class="prayer-box">Господь Иисус, я прихожу к Тебе со всей своей усталостью и грузом ошибок. Спасибо, что принимаешь меня и даруешь истинный покой. Аминь.</div>
             `
-        },
-        {
-            ref: "Исаия 40:31",
-            verse: "А надеющиеся на Господа обновят силы: поднимут крылья, как орлы...",
-            title: "Парение на ветрах благодати",
-            content: `
-                <p>Орел обладает удивительным инстинктом: птица не машет крыльями до полного изнеможения, чтобы подняться над бурей. Она распускает крылья и ждет, пока мощный восходящий поток воздуха подхватит ее, после чего просто парит на нем. «Ожидать Господа» в Писании означает прекратить суетиться и полностью довериться силе Святого Духа.</p>
-                <p>Когда мы пытаемся выплыть за счет собственной праведности, мы быстро тонем в отчаянии. Но когда мы доверяемся Христу, Его благодать становится тем самым невидимым потоком, который поднимает нас на недосягаемую для земных страхов высоту.</p>
-                <div class="author-sign">Чарльз Сперджен, из проповеди «Сила в ожидании»</div>
-                <div class="prayer-box">Господь Иисус, научи меня доверять Твоему Духу. Подними меня над моими страхами и дай силы парить в Твоем небесном мире. Аминь.</div>
-            `
-        },
-        {
-            ref: "К Римлянам 8:28",
-            verse: "Притом знаем, что любящим Бога... все содействует ко благу.",
-            title: "Божественная алхимия скорбей",
-            content: `
-                <p>Божья любовь часто приходит к нам в темной маске. Мы смотрим на скорби, болезни и утраты как на абсолютных врагов, но в руках великого Мастера Иисуса Христа они обращаются в инструменты нашего духовного созидания. Бог не автор греха, но Его премудрость настолько безгранична, что Он исцеляет последствия зла и направляет их к нашему высшему благу.</p>
-                <p>Вспомните Голгофу: человеческая злоба казалась торжеством тьмы, но именно через это Бог совершил искупление мира. Если Он смог сотворить такое из распятия Своего Сына, неужели Он не проведет вас сквозь ваши сегодняшние испытания?</p>
-                <div class="author-sign">Томас Уотсон, из трактата «Утешение для верующих в скорбях»</div>
-                <div class="prayer-box">Господь Иисус, я верю, что Твоя искупительная любовь способна обратить любую боль мне во благу. Укрепи мою веру посреди шторма. Аминь.</div>
-            `
-        },
-        {
-            ref: "Псалом 45:11",
-            verse: "Остановитесь и познайте, что Я — Бог.",
-            title: "Тишина святого уединения",
-            content: `
-                <p>Душа человека подобна пруду с мутной водой: пока мы бегаем и суетимся, грязь поднимается со дна и застилает нам глаза. Но стоит только остановиться и замереть в тишине перед лицом Христа, как суета оседает, и внутренний мир становится кристально чистым.</p>
-                <p>Познать Бога невозможно в спешке. Иисус оставлял толпы народа и уходил на гору, чтобы побыть наедине с Отцом. Он показывал нам пример: чтобы побеждать в служении миру, необходимо черпать жизнь в тайной комнате созерцания Спасителя.</p>
-                <div class="author-sign">А. В. Тозер, из книги «Погоня за Богом»</div>
-                <div class="prayer-box">Господь Иисус, помоги мне укротить внутренний шум. Я останавливаюсь перед Тобой, чтобы наполнить сердце Твоим светом. Аминь.</div>
-            `
-        },
-        {
-            ref: "К Ефесянам 4:26",
-            verse: "Солнце да не зайдет во гневе вашем.",
-            content: `
-                <p>Непрощение и затаенные обиды становятся тяжелым камнем в кармане духовного путника, из-за которого тот спотыкается на каждом шагу. Оставлять неразрешенные конфликты на ночь — значит давать врагу душ человеческих право сеять горечь и разделение в нашем сердце.</p>
-                <p>Иисус Христос простил нам неизмеримо больший долг, чем кто-либо из людей может задолжать нам. Помня крест, мы не имеем права ложиться спать с камнем за пазухой. Прощение — это акт послушания Голгофской любви.</p>
-                <div class="author-sign">Джон Баньян, из книги «Путешествие пилигрима»</div>
-                <div class="prayer-box">Господь Иисус, ради Твоей великой жертвы я прощаю всех, кто меня обидел. Очисти мое сердце от всякой горечи и даруй мир. Аминь.</div>
-            `
-        },
-        {
-            ref: "К Колоссянам 3:15",
-            verse: "И да владычествует в сердцах ваших мир Божий...",
-            title: "Королевская печать мира",
-            content: `
-                <p>Мир Христа — это королевская печать на наших тревогах и сомнениях. Когда мирские обстоятельства кричат о крахе, внутри верующего человека звучит тихий голос Спасителя: «Я победил мир». Этот мир не купить за деньги и не достичь силой воли — он даруется как плод единения с распятым и воскресшим Господом.</p>
-                <p>Пусть этот внутренний мир станет вашим неподкупным судьей в принятии решений. Если вы теряете его, вступая на какой-то путь, остановитесь — это верный знак Христа, что вы свернули не туда.</p>
-                <div class="author-sign">Чарльз Сперджен, из проповеди «Мир Божий»</div>
-                <div class="prayer-box">Господь Иисус, пусть Твой мир царствует в моем разуме и надежно защищает меня от суеты и страха. Аминь.</div>
-            `
-        },
-        {
-            ref: "Псалом 117:24",
-            verse: "Сей день сотворил Господь: возрадуемся и возвеселимся в оном!",
-            title: "Радость нового рассвета",
-            content: `
-                <p>Начинайте каждый новый день с благодарения. Даже если вокруг нас непогода, а на душе тяжело, сам дар нового дня во Христе — это великий повод для духовного ликования. Каждое утро напоминает нам о том, что милость Господа к нам никогда не иссякает и обновляется с рассветом.</p>
-                <p>Иисус Христос Своей смертью и триумфальным воскресением выкупил наше время из рабства тлению. Теперь каждый прожитый час наполнен вечным смыслом. Радость о Спасителе — это наша броня против уныния.</p>
-                <div class="author-sign">Ричард Бакстер, из книги «Практическое благочестие»</div>
-                <div class="prayer-box">Господь Иисус, благодарю Тебя за этот новый день жизни. Наполни мое сердце радостью Твоего спасения. Аминь.</div>
-            `
-        },
-        {
-            ref: "К Галатам 6:9",
-            verse: "Делая добро, да не унываем, ибо в свое время пожнем, если не ослабеем.",
-            content: `
-                <p>Вера начинает действовать там, где прекращается земное зрение. Мы часто хотим видеть плоды своих добрых дел немедленно, но Бог испытывает нашу верность в малом. Служение людям нередко бывает неблагодарным, но наш труд никогда не бывает тщетным о Господе, потому что мы делаем его ради Христа.</p>
-                <p>Вспомните нашего Спасителя: Его отвергали те, кому Он исцелял тела и души, но Он не сошел с креста и не перестал любить до конца. Берите пример с Его несокрушимой стойкости.</p>
-                <div class="author-sign">Джордж Мюллер, из отчетов о миссионерском служении</div>
-                <div class="prayer-box">Господь Иисус, дай мне силы не унывать в служении людям. Укрепи мои руки и согрей мое сердце Твоей любовью. Аминь.</div>
-            `
-        },
-        {
-            ref: "К Филиппийцам 4:6",
-            verse: "Не заботьтесь ни о чем, но всегда в молитве и прошении с благодарением...",
-            title: "Лекарство от паники",
-            content: `
-                <p>Тревога о завтрашнем дне — это практический атеизм, потому что она ведет себя так, будто у нас нет Отца на небесах. Переживать о будущем — это все равно что пытаться нести вчерашнюю ношу вместе с сегодняшней и завтрашней одновременно. Иисус призывает нас переложить эту непосильную тяжесть на Его плечи.</p>
-                <p>Молитва с благодарением — это верное лекарство от паники. Когда мы благодарим Бога за то, что Он уже совершил во Христе, наши текущие проблемы уменьшаются до истинных размеров, а вера обретает крылья.</p>
-                <div class="author-sign">Томас Уотсон, из книги «Небесное граждановедение»</div>
-                <div class="prayer-box">Господь Иисус, я слагаю с себя бремя тревог. Спасибо за Твою верную заботу обо мне во все дни моей жизни. Аминь.</div>
-            `
-        },
-        {
-            ref: "Псалом 36:4",
-            verse: "Утешайся Господом, и Он исполнит желания сердца твоего.",
-            content: `
-                <p>Человек создан для того, чтобы быть полностью заполненным Богом. Пока мы пытаемся утолить жажду души земными вещами, мы неизбежно будем сталкиваться с разочарованием. Только Иисус Христос способен удовлетворить самые глубокие тайники человеческого существа.</p>
-                <p>Утешаться Господом — значит находить в Нем такой восторг и полноту, что земные амбиции уступают место Его святой воле. Когда Христос становится нашим главным Сокровищем, наши желания очищаются, и Он дарует нам то, о чем просит обновленное сердце.</p>
-                <div class="author-sign">А. В. Тозер, из книги «Сокровище в глиняных сосудах»</div>
-                <div class="prayer-box">Господь Иисус, Ты — истинное сокровище моего сердца. Научи меня находить полноту жизни в Твоем пречистом присутствии. Аминь.</div>
-            `
-        },
-        {
-            ref: "Притчи Соломона 17:22",
-            verse: "Веселое сердце благотворно, как врачевство, а унылый дух сушит кости.",
-            content: `
-                <p>В самые темные часы своей души мы находим исцеление только в созерцании Голгофской крови. Истинная христианская радость — это не слепой оптимизм, а триумф спасительной благодати над грехом, смертью и отчаянием.</p>
-                <p>Унылый дух парализует свидетельство верующего человека перед миром. Но радость о прощении во Христе оживляет израненный дух и вдохновляет на радостные подвиги любви и послушания.</p>
-                <div class="author-sign">Чарльз Сперджен, из проповеди «Целебное сердце»</div>
-                <div class="prayer-box">Господь Иисус, исцели мой дух радостью Твоего спасения и избавь меня от мрачных сомнений. Аминь.</div>
-            `
-        },
-        {
-            ref: "К Ефесянам 5:16",
-            verse: "Дорожа временем, потому что дни лукавы.",
-            content: `
-                <p>Жизнь на земле коротка, и каждый день — это невосполнимый дар. Мы должны жить так, будто каждый день может стать последним в нашей земной истории. Время — это валюта вечности: мы не можем купить его обратно, мы можем лишь инвестировать его в Царство Божие.</p>
-                <p>Дни лукавы, потому что суета постоянно пытается украсть наше внимание у главного. Пусть Иисус Христос будет компасом для вашего расписания.</p>
-                <div class="author-sign">Ричард Бакстер, из книги «Наставления пастырям и пастве»</div>
-                <div class="prayer-box">Господь Иисус, научи меня мудро ценить каждый час и направляй мои стопы в исполнении Твоей воли. Аминь.</div>
-            `
-        },
-        {
-            ref: "Псалом 138:23-24",
-            verse: "Испытай меня, Боже, и узнай сердце мое... и направь меня на путь вечный.",
-            content: `
-                <p>Христианин должен ежедневно проверять свое сердце у зеркала Божьего Слова. Самообман — это величайшая опасность для бессмертной души. Попросить Иисуса Христа испытать нас — это акт доверия Небесному Врачу, Который хирургически точно отсекает всё лишнее, чтобы даровать нам избыток жизни.</p>
-                <p>Не бойтесь Божьего света: Он высвечивает наши слабости не для того, чтобы осудить (ибо во Христе нет осуждения), а чтобы исцелить, очистить и освободить.</p>
-                <div class="author-sign">Джон Баньян, из книги «Небесный суд над душой»</div>
-                <div class="prayer-box">Господь Иисус, испытай мое сердце и очисти меня Своей благодатью. Веди меня неизменно по Твоему вечному пути. Аминь.</div>
-            `
         }
     ];
 
-    // УПРАВЛЕНИЕ ЗАСТАВКОЙ И ТЕМОЙ
     let currentTheme = 'light';
     let memoryNotes = [];
+    let timerInterval = null;
+    let timeLeft = 60;
+    let isTimerRunning = false;
 
     function safeGetItem(key, defaultVal) {
         try { return localStorage.getItem(key) || defaultVal; } 
@@ -682,6 +667,7 @@
     }
 
     window.addEventListener('load', () => {
+        updateRollers();
         setTimeout(() => {
             const splash = document.getElementById('splash-screen');
             if(splash) {
@@ -689,18 +675,37 @@
                 setTimeout(() => {
                     splash.style.display = 'none';
                     document.body.style.overflowY = 'auto';
-                }, 1500);
+                    updateRollers();
+                }, 1200);
             }
-        }, 4000); 
+        }, 3000); 
     });
 
-    window.addEventListener('scroll', () => {
+    function updateRollers() {
         const y = window.scrollY;
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const progress = Math.min(1, Math.max(0, y / maxScroll));
+
         const topCyl = document.getElementById('cylinder-top');
         const botCyl = document.getElementById('cylinder-bottom');
-        if(topCyl) topCyl.style.backgroundPosition = `0 0, 0 ${y * 0.4}px`;
-        if(botCyl) botCyl.style.backgroundPosition = `0 0, 0 ${-y * 0.4}px`;
-    });
+
+        const minThickness = 22;
+        const maxThickness = 46;
+        const topHeight = minThickness + (maxThickness - minThickness) * progress;
+        const botHeight = maxThickness - (maxThickness - minThickness) * progress;
+
+        if(topCyl) {
+            topCyl.style.height = `${topHeight}px`;
+            topCyl.style.backgroundPosition = `0 0, 0 0, 0 ${-y * 0.55}px`;
+        }
+        if(botCyl) {
+            botCyl.style.height = `${botHeight}px`;
+            botCyl.style.backgroundPosition = `0 0, 0 0, 0 ${-y * 0.55}px`;
+        }
+    }
+
+    window.addEventListener('scroll', updateRollers);
+    window.addEventListener('resize', updateRollers);
 
     function applyTheme(theme) {
         document.body.setAttribute('data-theme', theme);
@@ -732,13 +737,15 @@
         setDateBadge();
         loadDailyContent();
         loadNotes();
+        updateRollers();
     });
 
-    function switchTab(tabId) {
+    function switchTab(tabId, btnElement) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+        setTimeout(updateRollers, 20);
     }
 
     function setDateBadge() {
@@ -755,18 +762,49 @@
         
         document.getElementById('daily-verse-ref').textContent = data.ref;
         document.getElementById('daily-verse-text').textContent = `«${data.verse}»`;
-        document.getElementById('sermon-title').textContent = data.title;
+        document.getElementById('sermon-title').textContent = data.title || 'Слово на сегодня';
         document.getElementById('sermon-body').innerHTML = data.content;
+        setTimeout(updateRollers, 20);
     }
 
     function generateNewDaily() {
         loadDailyContent(Math.floor(Math.random() * DAILY_DATABASE.length));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSilenceTimer() {
+        const btn = document.getElementById('timer-btn');
+        const text = document.getElementById('timer-text');
+
+        if (isTimerRunning) {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timeLeft = 60;
+            text.textContent = "01:00";
+            btn.textContent = "Начать минуту тишины";
+        } else {
+            isTimerRunning = true;
+            btn.textContent = "Остановить";
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let sec = timeLeft < 10 ? "0" + timeLeft : timeLeft;
+                text.textContent = `00:${sec}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    text.textContent = "Тишина завершена";
+                    btn.textContent = "Начать заново";
+                    timeLeft = 60;
+                }
+            }, 1000);
+        }
     }
 
     function toggleNoteEditor() {
         const editor = document.getElementById('note-editor');
         editor.classList.toggle('active');
         if (editor.classList.contains('active')) document.getElementById('note-title').focus();
+        setTimeout(updateRollers, 20);
     }
 
     function saveNote() {
@@ -788,6 +826,7 @@
         document.getElementById('note-text').value = '';
         document.getElementById('note-editor').classList.remove('active');
         loadNotes();
+        setTimeout(updateRollers, 20);
     }
 
     function loadNotes() {
@@ -808,6 +847,7 @@
         memoryNotes = memoryNotes.filter(n => n.id !== id);
         safeSetItem('spiritual_notes', JSON.stringify(memoryNotes));
         loadNotes();
+        setTimeout(updateRollers, 20);
     }
 
     function renderNotes(notesArray) {
